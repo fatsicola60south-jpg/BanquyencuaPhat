@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bản quyền của PHÁT - SOP Ngô Gia Mobile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #0267b5;
+      --primary-dark: #0a385c;
+      --accent: #0284c7;
+      --bg: #f1f6fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 75px; min-height: 100vh; }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: white; padding: 12px 16px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 10px rgba(2, 103, 181, 0.25);
+    }
+    .header-box { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      background: white; color: var(--primary); width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.35rem; flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .brand-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.3px; line-height: 1.2; }
+    .brand-sub { font-size: 0.75rem; color: #7dd3fc; margin-top: 2px; }
+
+    .container { padding: 12px; max-width: 600px; margin: 0 auto; }
+    .tab-view { display: none; }
+    .tab-view.active { display: block; animation: popIn 0.2s ease-out; }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+    .card {
+      background: var(--card); border-radius: 14px; padding: 14px; margin-bottom: 12px;
+      border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .card-title {
+      font-size: 0.95rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px;
+    }
+
+    .field-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
+    .chip-group { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .chip {
+      flex: 1; min-width: calc(20% - 6px); padding: 8px 4px; border: 1.5px solid #cbd5e1; border-radius: 10px;
+      background: #f8fafc; font-size: 0.8rem; font-weight: 700; color: #475569; text-align: center;
+      cursor: pointer; transition: 0.15s;
+    }
+    .chip.active { background: #e0f2fe; border-color: var(--primary); color: var(--primary); box-shadow: 0 1px 4px rgba(2, 103, 181, 0.15); }
+    .chip.disabled { opacity: 0.35; background: #e2e8f0; color: #94a3b8; border-color: #cbd5e1; cursor: not-allowed; text-decoration: line-through; }
+
+    .chip-drink {
+      width: 100%; padding: 11px 12px; border-radius: 10px; border: 1.5px solid #cbd5e1;
+      font-size: 0.88rem; font-weight: 700; color: var(--primary-dark); background: white; margin-bottom: 12px; outline: none;
+    }
+
+    .result-card {
+      background: #eff8ff; border: 1.5px solid #bae6fd; border-radius: 12px; padding: 14px;
+      margin-top: 10px; font-size: 0.88rem; line-height: 1.6;
+    }
+    .result-row { margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+    .result-row:last-child { margin-bottom: 0; }
+
+    .steps-box {
+      background: white; border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; margin-top: 10px;
+    }
+
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; }
+    .badge-no-shake { background: #fee2e2; color: #b91c1c; }
+    .badge-shake { background: #dbeafe; color: #1d4ed8; }
+    .badge-stir { background: #fef3c7; color: #b45309; }
+
+    .mobile-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th { background: #e0f2fe; color: var(--primary-dark); padding: 8px; border: 1px solid #bae6fd; font-weight: 700; white-space: nowrap; }
+    td { padding: 7px 8px; border: 1px solid #e2e8f0; }
+
+    .acc-item { border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 8px; overflow: hidden; background: white; }
+    .acc-header {
+      padding: 10px 12px; background: #f8fafc; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; color: var(--primary-dark);
+    }
+    .acc-body { padding: 10px 12px; font-size: 0.82rem; line-height: 1.55; display: none; border-top: 1px solid #e2e8f0; background: #fff; }
+    .acc-item.active .acc-body { display: block; }
+    .acc-item.active .acc-header { background: #e0f2fe; }
+
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: white;
+      border-top: 1px solid #cbd5e1; display: flex; justify-content: space-around; align-items: center;
+      z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--text-muted); text-decoration: none; font-size: 0.68rem; font-weight: 700;
+      width: 20%; height: 100%; cursor: pointer; border: none; background: transparent; gap: 3px;
+    }
+    .nav-item i { font-size: 1.15rem; }
+    .nav-item.active { color: var(--primary); }
+
+    .quiz-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .q-title { font-size: 0.9rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 10px; line-height: 1.4; }
+    .q-opt {
+      width: 100%; padding: 10px 12px; border: 1.5px solid #e2e8f0; border-radius: 9px; background: #f8fafc;
+      font-size: 0.84rem; font-weight: 600; text-align: left; margin-bottom: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    }
+    .q-opt.selected { background: #e0f2fe; border-color: var(--primary); font-weight: 700; color: var(--primary); }
+    .q-opt.correct { background: #dcfce7; border-color: var(--success); color: #065f46; font-weight: 700; }
+    .q-opt.wrong { background: #fee2e2; border-color: var(--danger); color: #991b1b; }
+
+    .blank-input {
+      border: none; border-bottom: 2px solid var(--primary); background: #e0f2fe;
+      padding: 3px 6px; font-size: 0.9rem; font-weight: 800; color: var(--primary-dark);
+      text-align: center; border-radius: 4px; width: 95px; margin: 0 3px;
+    }
+    .btn-act {
+      width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px;
+      font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-light { background: #e2e8f0; color: #334155; }
+
+    footer {
+      text-align: center; font-size: 0.8rem; color: #94a3b8; padding: 14px; font-weight: 800; letter-spacing: 0.8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-box">
+      <div class="brand-logo">吳</div>
+      <div>
+        <div class="brand-title">Bản quyền của PHÁT</div>
+        <div class="brand-sub">Tránh xa tủ đông cùng Phát nhé</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- TAB 1: TRA CỨU ĐỒ UỐNG -->
+    <div id="tab-lookup" class="tab-view active">
+      <div class="card">
+        <div class="field-label"><i class="fa-solid fa-mug-hot"></i> Chọn Đồ Uống</div>
+        <select id="sel-drink" class="chip-drink" onchange="onDrinkChange()">
+          <optgroup label="Dòng Cà Phê Mới (Chỉ Ly M - Cố Định Đường)">
+            <option value="ca_phe_sua">Cà Phê Sữa (Chỉ Ly M - Cố định 100%)</option>
+            <option value="ca_phe_kem">Cà Phê Kem Sữa Tươi (Chỉ Ly M - Cố định 100%)</option>
+          </optgroup>
+          <optgroup label="Dòng Trà Đơn & Trà Chanh">
+            <option value="tra_don">Trà Đơn (Hồng / Xanh / Ô Long)</option>
+            <option value="hong_tra_kem">Hồng Trà Kem Tươi (Chỉ Ly M)</option>
+            <option value="tra_chanh">Trà Chanh (Hồng / Xanh Chanh - Giảm đủ 5 mức)</option>
+            <option value="tra_chanh_codinh">Trà Chanh Vải Thiều / Bí Đao Chanh (Cố định đường)</option>
+          </optgroup>
+          <optgroup label="Dòng Trà Mix">
+            <option value="hong_tra_bi_dao">Hồng Trà Bí Đao Mix 6:4 (Giảm tối đa 50%)</option>
+            <option value="tra_xanh_bi_dao">Trà Xanh Bí Đao Mix 5:5 (Giảm tối đa 50%)</option>
+            <option value="tra_olong_bidao">Trà Ô Long Bí Đao (Giảm tối đa 50%)</option>
+          </optgroup>
+          <optgroup label="Dòng Trà Sữa & Socola">
+            <option value="tra_sua">Trà Sữa Đài Loan / Ô Long</option>
+            <option value="ts_tcdd">Trà Sữa Trân Châu Đường Đen</option>
+            <option value="ts_socola">Trà Sữa Socola (Hồng Trà Đài Loan)</option>
+            <option value="ts_khoai_mon">Trà Sữa Khoai Môn Nghiền (Giảm đủ 5 mức)</option>
+          </optgroup>
+          <optgroup label="Dòng Sữa Tươi & Latte">
+            <option value="st_tcdd">Sữa Tươi Trân Châu Đường Đen (100% - 50% - 0%)</option>
+            <option value="st_khoai_mon">Sữa Tươi Khoai Môn Nghiền (100% - 50% - 0%)</option>
+            <option value="latte_hong_tra">Hồng Trà Latte</option>
+            <option value="latte_tcdd">Trân Châu Đường Đen Latte</option>
+            <option value="latte_bi_dao">Bí Đao Latte / Vải Thiều Latte (Tối đa 70%)</option>
+          </optgroup>
+          <optgroup label="Dòng Trà Trái Cây & Đặc Biệt">
+            <option value="o_long_dao">Ô Long Đào (Chỉ Ly M - Giảm 5 mức)</option>
+            <option value="o_long_nho">Ô Long Nho (Chỉ Ly M - Giảm 5 mức)</option>
+            <option value="oi_hong">Màu Hồng Lãng Mạn (Ổi Hồng - Chỉ Ly M)</option>
+            <option value="kem_cheese">Hồng Trà / Trà Xanh / Ô Long Kem Cheese</option>
+            <option value="bat_bao">Bát Bảo Ngô Gia (Công thức mới 2025 - Tối đa 50%)</option>
+          </optgroup>
+          <optgroup label="Dòng Trà Xí Muội">
+            <option value="xi_muoi_olong">Trà Xí Muội Ô Long Mix (Giảm tối đa 50%)</option>
+            <option value="xi_muoi_ngogia">Trà Xí Muội Ngô Gia (Cố định 100%)</option>
+            <option value="xi_muoi_bidao">Trà Xí Muội Bí Đao Mix (Cố định 100%)</option>
+          </optgroup>
+        </select>
+
+        <div class="field-label"><i class="fa-solid fa-expand"></i> Kích Cỡ</div>
+        <div class="chip-group">
+          <div class="chip active" id="chip-size-M" onclick="setChip('size', 'M', this)">Ly M (700cc)</div>
+          <div class="chip" id="chip-size-L" onclick="setChip('size', 'L', this)">Ly L (1000cc)</div>
+        </div>
+
+        <div class="field-label"><i class="fa-solid fa-snowflake"></i> Mức Đá</div>
+        <div class="chip-group">
+          <div class="chip active" id="chip-ice-normal" onclick="setChip('ice', 'normal', this)">Bình thường</div>
+          <div class="chip" id="chip-ice-less" onclick="setChip('ice', 'less', this)">Ít đá</div>
+          <div class="chip" id="chip-ice-none" onclick="setChip('ice', 'none', this)">Không đá</div>
+          <div class="chip" id="chip-ice-more" onclick="setChip('ice', 'more', this)">Nhiều đá</div>
+        </div>
+
+        <div class="field-label"><i class="fa-solid fa-cubes-stacked"></i> Mức Đường</div>
+        <div class="chip-group" id="sugar-chip-group">
+          <div class="chip active" id="chip-sug-100" onclick="setChip('sugar', '100', this)">100%</div>
+          <div class="chip" id="chip-sug-70" onclick="setChip('sugar', '70', this)">70%</div>
+          <div class="chip" id="chip-sug-50" onclick="setChip('sugar', '50', this)">50%</div>
+          <div class="chip" id="chip-sug-30" onclick="setChip('sugar', '30', this)">30%</div>
+          <div class="chip" id="chip-sug-0" onclick="setChip('sugar', '0', this)">0%</div>
+        </div>
+
+        <div id="lookup-result" class="result-card"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: QUY TRÌNH THAO TÁC CHUẨN TỪNG MÓN -->
+    <div id="tab-process" class="tab-view">
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-list-ol" style="color:var(--primary);"></i> Quy Trình Thao Tác Chuẩn File SOP</div>
+        <div id="process-accordion-container"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: QUY TẮC ĐÁ & BỘ 7 TOPPING BÁT BẢO MỚI -->
+    <div id="tab-rules" class="tab-view">
+      <div class="card" style="border: 2px solid var(--primary);">
+        <div class="card-title" style="color:var(--primary);"><i class="fa-solid fa-crown"></i> Bộ 7 Topping Bát Bảo Ngô Gia (Công thức mới áp dụng 17/12/2025)</div>
+        <div class="mobile-table-wrap">
+          <table>
+            <thead>
+              <tr><th>STT</th><th>Tên Topping Bát Bảo Mới</th><th>Định lượng chuẩn</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><strong>Trân Châu Đường Đen</strong></td><td>1 vá nhỏ — <strong>60g</strong></td></tr>
+              <tr><td>2</td><td><strong>Bánh Vuông Đường Đen</strong> (Mới)</td><td>Nửa vá — <strong>25g</strong></td></tr>
+              <tr><td>3</td><td><strong>Trân Châu Củ Năng</strong> (Mới)</td><td>Nửa vá — <strong>25g</strong></td></tr>
+              <tr><td>4</td><td><strong>Thạch Sương Sáo</strong></td><td>1 vá — <strong>40g</strong></td></tr>
+              <tr><td>5</td><td><strong>Thạch Dừa Nguyên Vị</strong></td><td>1 vá — <strong>40g</strong></td></tr>
+              <tr><td>6</td><td><strong>Hạt Sen</strong></td><td>Nửa vá — <strong>25g</strong></td></tr>
+              <tr><td>7</td><td><strong>Trân Châu 3Q Trắng</strong></td><td>Nửa vá — <strong>20g</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-triangle-exclamation" style="color:var(--danger);"></i> Giới Hạn Giảm Đường Từng Nhóm</div>
+        <div style="font-size:0.83rem; line-height:1.6; color:#334155;">
+          • <strong>Giảm đủ 5 mức (100, 70, 50, 30, 0%):</strong> Trà Đơn, Hồng Trà Kem Tươi, Trà Chanh (Hồng/Xanh), Ô Long Đào, Ô Long Nho, Màu Hồng Lãng Mạn, Trà Sữa Đài Loan, Trà Sữa TCĐĐ, Trà Sữa Socola, Hồng Trà Latte, Trà Sữa Khoai Môn Nghiền.<br>
+          • <strong>Chỉ có 100% - 50% - 0%:</strong> Sữa tươi TCĐĐ, Sữa tươi Khoai môn, Kem Cheese.<br>
+          • <strong>Giảm tối đa 50% đường (100, 70, 50%):</strong> Hồng Trà Bí Đao (6:4), Trà Xanh Bí Đao (5:5), Trà Ô Long Bí Đao, Trà Xí Muội Ô Long Mix, Bát Bảo Ngô Gia.<br>
+          • <strong>Giảm tối đa 70% đường (100, 70%):</strong> Bí Đao Latte, Vải Thiều Latte.<br>
+          • <strong>Cố định 100% đường:</strong> Cà Phê Sữa, Cà Phê Kem Sữa Tươi, Trà Chanh Vải Thiều, Bí Đao Chanh, Trà Xí Muội Ngô Gia, Trà Xí Muội Bí Đao Mix.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fa-solid fa-glass-water" style="color:var(--primary);"></i> Vạch Rót Ly PP Khi Giảm Đường (Đá Thường)</div>
+        <div class="mobile-table-wrap">
+          <table>
+            <thead>
+              <tr><th>Mức đường</th><th>Ly M (700cc)</th><th>Ly L (1000cc)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>100%</strong></td><td>Trà ngọt <strong>đầy ly</strong></td><td>Trà ngọt <strong>đầy ly</strong></td></tr>
+              <tr><td><strong>70%</strong></td><td>Ngọt <strong>vạch 500ml</strong> + lạt đầy ly</td><td>Ngọt <strong>vạch 700ml</strong> + lạt đầy ly</td></tr>
+              <tr><td><strong>50%</strong></td><td>Ngọt <strong>vạch 350ml</strong> + lạt đầy ly</td><td>Ngọt <strong>vạch 500ml</strong> + lạt đầy ly</td></tr>
+              <tr><td><strong>30%</strong></td><td>Ngọt <strong>vạch 200ml</strong> + lạt đầy ly</td><td>Ngọt <strong>vạch 300ml</strong> + lạt đầy ly</td></tr>
+              <tr><td><strong>0%</strong></td><td>Trà lạt <strong>đầy ly</strong></td><td>Trà lạt <strong>đầy ly</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: TRẮC NGHIỆM -->
+    <div id="tab-quiz" class="tab-view">
+      <div class="card">
+        <div class="field-label"><i class="fa-solid fa-graduation-cap"></i> Chọn Bộ Đề Thi Trắc Nghiệm (10 Đề):</div>
+        <select id="sel-quiz-exam" class="chip-drink" onchange="changeQuizExam(this.value)">
+          <option value="0">Đề 1: Nhập Môn, Vận Hành & Topping Chuẩn</option>
+          <option value="1">Đề 2: Dòng Trà Đơn & Vạch Rót Ly PP / Ca Đong</option>
+          <option value="2">Đề 3: Dòng Trà Sữa Cơ Bản & Trà Sữa Socola</option>
+          <option value="3">Đề 4: Dòng Trân Châu Đường Đen & Sữa Tươi TCĐĐ</option>
+          <option value="4">Đề 5: Dòng Trà Latte & TC Đường Đen Latte</option>
+          <option value="5">Đề 6: Dòng Trà Chanh & Màu Hồng Lãng Mạn (Ổi Hồng)</option>
+          <option value="6">Đề 7: Dòng Trái Cây (Đào, Nho) & Trà Mix Bí Đao</option>
+          <option value="7">Đề 8: Bát Bảo Ngô Gia (Công thức mới) & Trà Ô Long Bí Đao</option>
+          <option value="8">Đề 9: Khoai Môn Nghiền & Dòng Trà Kem Cheese</option>
+          <option value="9">Đề 10: Dòng Cà Phê Mới & Dòng Trà Xí Muội</option>
+        </select>
+        <div id="quiz-summary" style="font-size:0.8rem; font-weight:700; color:var(--primary); margin-bottom:10px;"></div>
+      </div>
+
+      <div id="quiz-list"></div>
+      
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="btn-act btn-light" onclick="resetQuizCurrent()"><i class="fa-solid fa-rotate-left"></i> Làm Lại Đề Này</button>
+        <button class="btn-act" id="btn-sub-quiz" onclick="gradeQuiz()"><i class="fa-solid fa-check"></i> Chấm Điểm (10 Câu)</button>
+      </div>
+    </div>
+
+    <!-- TAB 5: ĐỤC LỖ -->
+    <div id="tab-cloze" class="tab-view">
+      <div class="card">
+        <div class="field-label"><i class="fa-solid fa-pen-ruler"></i> Chọn Bài Luyện Gõ Đục Lỗ (10 Đề):</div>
+        <select id="sel-cloze-exam" class="chip-drink" onchange="changeClozeExam(this.value)">
+          <option value="0">Bài 1: Định lượng Topping Trọng Điểm (Trang 6)</option>
+          <option value="1">Bài 2: Vạch Canh Ly PP Trà Đơn Ly M (Trang 7)</option>
+          <option value="2">Bài 3: Quy trình Hồng Trà Kem Tươi (Trang 8)</option>
+          <option value="3">Bài 4: Quy trình Trà Chanh Ly M & L (Trang 9)</option>
+          <option value="4">Bài 5: Sữa Tươi Trân Châu Đường Đen (Trang 12)</option>
+          <option value="5">Bài 6: Màu Hồng Lãng Mạn / Ổi Hồng (Trang 15)</option>
+          <option value="6">Bài 7: Quy trình Cà Phê Sữa & Cà Phê Kem Sữa Tươi (Mới)</option>
+          <option value="7">Bài 8: Trà Sữa Socola & Quy Tắc TCĐĐ (Trang 22)</option>
+          <option value="8">Bài 9: Trà Sữa Khoai Môn Nghiền 5 Mức Đường (Trang 23)</option>
+          <option value="9">Bài 10: 7 Loại Topping Bát Bảo Ngô Gia (Công thức mới 2025)</option>
+        </select>
+      </div>
+
+      <div id="cloze-list"></div>
+
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button class="btn-act btn-light" onclick="resetClozeCurrent()"><i class="fa-solid fa-rotate-left"></i> Làm Lại Bài Này</button>
+        <button class="btn-act" onclick="gradeCloze()"><i class="fa-solid fa-paper-plane"></i> Nộp Bài Đục Lỗ</button>
+      </div>
+    </div>
+
+    <footer>PHÁT LÀ GOAT</footer>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active" onclick="tabNav('lookup', this)">
+      <i class="fa-solid fa-bolt"></i><span>Tra Cứu</span>
+    </button>
+    <button class="nav-item" onclick="tabNav('process', this)">
+      <i class="fa-solid fa-list-check"></i><span>Quy Trình</span>
+    </button>
+    <button class="nav-item" onclick="tabNav('rules', this)">
+      <i class="fa-solid fa-snowflake"></i><span>Đá/Đường</span>
+    </button>
+    <button class="nav-item" onclick="tabNav('quiz', this)">
+      <i class="fa-solid fa-circle-question"></i><span>Trắc Nghiệm</span>
+    </button>
+    <button class="nav-item" onclick="tabNav('cloze', this)">
+      <i class="fa-solid fa-pen"></i><span>Đục Lỗ</span>
+    </button>
+  </div>
+
+  <script>
+    // TOÀN BỘ CƠ SỞ DỮ LIỆU ĐỒ UỐNG CHUẨN XÁC TỪ FILE SOP & CÔNG THỨC MỚI
+    const SOP_DATA = {
+      // 2 MÓN CÀ PHÊ MỚI BỔ SUNG
+      ca_phe_sua: {
+        name: "Cà Phê Sữa (Chỉ có size M - Cố định độ ngọt)",
+        sizes: ['M'],
+        sugars: ['100'],
+        action: "▲ Thành phẩm không cần lắc",
+        procedure: "Cho cà phê 300ml → cho 40cc sữa đặc → cho 40cc kem béo → cho 20cc nước đường → khuấy đều → cho đá vào → hoàn thành.",
+        notes: "Giá 34k (VIP 31k). Đong cà phê theo ca định lượng rồi rót vào ly PP. Thức uống không thể cho nhiều đá.",
+        ice_M: { normal: "Cho đá đến đầy ly", less: "Cho đá đến vạch 600", none: "Không cho đá", more: "CẤM: Thức uống không thể cho nhiều đá" },
+        formula_M: { '100': "300ml Cà phê không đường + 40cc Sữa đặc + 40cc Kem béo + 20cc Nước đường" }
+      },
+      ca_phe_kem: {
+        name: "Cà Phê Kem Sữa Tươi (Chỉ có size M - Cố định độ ngọt)",
+        sizes: ['M'],
+        sugars: ['100'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "120ml sữa tươi và 30cc nước đường vào ca định lượng khuấy đều sau đó cho vào ly PP → cho đá → cho cà phê 200ml → múc 1 viên kem vani (60g) cho vào ly PP → đậy nắp → hoàn thành.",
+        notes: "Giá 37k (VIP 34k). Đong cà phê theo ca định lượng rồi rót vào ly PP. Thức uống không thể cho nhiều đá.",
+        ice_M: { normal: "Cho đá đến vạch 600, cho cà phê 200ml", less: "Cho đá đến vạch 300, cho cà phê 200ml", none: "Không cho đá, cho cà phê 200ml", more: "CẤM: Thức uống không thể cho nhiều đá" },
+        formula_M: { '100': "120ml Sữa tươi + 30cc Nước đường + 200ml Cà phê không đường + 1 viên Kem vani (60g)" }
+      },
+
+      tra_don: {
+        name: "Trà Đơn (Hồng / Xanh / Ô Long)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "▲ Không lắc ly",
+        procedure: "Đá → Trà → Hoàn thành.",
+        notes: "Nhiều đá, đá bình thường chia tỉ lệ dựa trên ly PP. Ít đá, không đá đong trà chia tỉ lệ trên ca định lượng sau đó cho vào ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        ice_L: { normal: "Đến vạch 800ml", less: "Đến vạch 400ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "Đầy ly (ca: 350ml / 0ml)", '70': "Vạch 500ml (ca: 250ml ngọt / 100ml lạt)", '50': "Vạch 350ml (ca: 175ml ngọt / 175ml lạt)", '30': "Vạch 200ml (ca: 100ml ngọt / 250ml lạt)", '0': "Đầy ly lạt (ca: 0ml ngọt / 350ml lạt)" },
+        formula_L: { '100': "Đầy ly (ca: 500ml / 0ml)", '70': "Vạch 700ml (ca: 350ml ngọt / 150ml lạt)", '50': "Vạch 500ml (ca: 250ml ngọt / 250ml lạt)", '30': "Vạch 300ml (ca: 150ml ngọt / 350ml lạt)", '0': "Đầy ly lạt (ca: 0ml ngọt / 500ml lạt)" }
+      },
+      hong_tra_kem: {
+        name: "Hồng Trà Kem Tươi (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "Cho đá tới vạch 600ml → cho trà gần đầy ly → múc 1 viên Kem Tươi (60g) cho vào ly PP → sau đó đậy nắp → hoàn thành.",
+        notes: "Chỉ có ly M. Topping 1 viên kem vani 60g.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "1 viên kem (60g) + Trà ngọt đầy ly (ca: 350/0)", '70': "1 viên kem (60g) + Trà ngọt vạch 500ml (ca: 250/100)", '50': "1 viên kem (60g) + Trà ngọt vạch 350ml (ca: 175/175)", '30': "1 viên kem (60g) + Trà ngọt vạch 200ml (ca: 100/250)", '0': "1 viên kem (60g) + Trà lạt đầy ly (ca: 0/350)" }
+      },
+      tra_chanh: {
+        name: "Trà Chanh (Hồng / Xanh Chanh)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Lắc trước khi ra món",
+        procedure_M: "Cho đá vào ly PP → Nước chanh (20cc) → Nước đường (10cc) → 2 lát chanh → Cho trà vào ly PP.",
+        procedure_L: "Cho đá vào ly PP → Nước chanh (25cc) → Nước đường (15cc) → 2 lát chanh → Cho trà vào ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        ice_L: { normal: "Đến vạch 800ml", less: "Đến vạch 400ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "20cc chanh + 10cc đường + 2 lát chanh + Trà ngọt đầy ly (ca: 350/0)", '70': "20cc chanh + 10cc đường + 2 lát chanh + Trà ngọt vạch 500ml (ca: 250/100)", '50': "20cc chanh + 10cc đường + 2 lát chanh + Trà ngọt vạch 350ml (ca: 175/175)", '30': "20cc chanh + 10cc đường + 2 lát chanh + Trà ngọt vạch 200ml (ca: 100/250)", '0': "20cc chanh + 10cc đường + 2 lát chanh + Trà lạt đầy ly (ca: 0/350)" },
+        formula_L: { '100': "25cc chanh + 15cc đường + 2 lát chanh + Trà ngọt đầy ly (ca: 500/0)", '70': "25cc chanh + 15cc đường + 2 lát chanh + Trà ngọt vạch 700ml (ca: 350/150)", '50': "25cc chanh + 15cc đường + 2 lát chanh + Trà ngọt vạch 500ml (ca: 250/250)", '30': "25cc chanh + 15cc đường + 2 lát chanh + Trà ngọt vạch 300ml (ca: 150/350)", '0': "25cc chanh + 15cc đường + 2 lát chanh + Trà lạt đầy ly (ca: 0/500)" }
+      },
+      tra_chanh_codinh: {
+        name: "Trà Chanh Vải Thiều / Bí Đao Chanh",
+        sizes: ['M', 'L'],
+        sugars: ['100'],
+        action: "◎ Lắc trước khi ra món",
+        procedure_M: "Cho đá vào ly PP → Nước chanh (20cc) → Nước đường (10cc) → 2 lát chanh → Cho trà vào ly PP.",
+        procedure_L: "Cho đá vào ly PP → Nước chanh (25cc) → Nước đường (15cc) → 2 lát chanh → Cho trà vào ly PP.",
+        notes: "Ghi chú trong SOP: Hồng trà chanh vải thiều, bí đao chanh cố định độ đường.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        ice_L: { normal: "Đến vạch 800ml", less: "Đến vạch 400ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "20cc cốt chanh + 10cc nước đường + 2 lát chanh + Trà châm đầy ly (ca: 350ml)" },
+        formula_L: { '100': "25cc cốt chanh + 15cc nước đường + 2 lát chanh + Trà châm đầy ly (ca: 500ml)" }
+      },
+      hong_tra_bi_dao: {
+        name: "Hồng Trà Bí Đao (Mix 6:4)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "Cho trà Bí Đao → Hồng Trà vào ly PP → Cho đá vào ly PP.",
+        notes: "Pha chế đong trà chia tỉ lệ trên ca định lượng sau đó cho vào ly PP. Giảm tối đa 50% đường.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "210ml Trà Bí Đao + 140ml Hồng Trà Đài Loan có đường", '70': "210ml Trà Bí Đao + 70ml Hồng Trà có đường + 70ml Hồng Trà không đường", '50': "210ml Trà Bí Đao + 140ml Hồng Trà không đường" },
+        formula_L: { '100': "300ml Trà Bí Đao + 200ml Hồng Trà Đài Loan có đường", '70': "300ml Trà Bí Đao + 100ml Hồng Trà có đường + 100ml Hồng Trà không đường", '50': "300ml Trà Bí Đao + 200ml Hồng Trà không đường" }
+      },
+      tra_xanh_bi_dao: {
+        name: "Trà Xanh Bí Đao (Mix 5:5)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "Cho trà Bí Đao → Trà Xanh vào ly PP → Cho đá vào ly PP.",
+        notes: "Pha chế đong trà chia tỉ lệ trên ca định lượng sau đó cho vào ly PP. Giảm tối đa 50% đường.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "175ml Trà Bí Đao + 175ml Trà Xanh có đường", '70': "175ml Trà Bí Đao + 100ml Trà Xanh có đường + 75ml Trà Xanh không đường", '50': "175ml Trà Bí Đao + 175ml Trà Xanh không đường" },
+        formula_L: { '100': "250ml Trà Bí Đao + 250ml Trà Xanh có đường", '70': "250ml Trà Bí Đao + 150ml Trà Xanh có đường + 100ml Trà Xanh không đường", '50': "250ml Trà Bí Đao + 250ml Trà Xanh không đường" }
+      },
+      tra_olong_bidao: {
+        name: "Trà Ô Long Bí Đao (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "Cho (40g) Củ Năng vào ly PP → tiếp đến cho trà Bí Đao → trà Ô Long → cho đá vào ly PP sau cùng.",
+        notes: "Chỉ có ly M. Đong trà bằng ca định lượng. Giảm tối đa 50% đường.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "1 vá/40g củ năng + 175ml Bí Đao + 175ml Ô Long có đường", '70': "1 vá/40g củ năng + 175ml Bí Đao + 100ml Ô Long có đường + 75ml Ô Long không đường", '50': "1 vá/40g củ năng + 175ml Bí Đao + 175ml Ô Long không đường" }
+      },
+      tra_sua: {
+        name: "Trà Sữa Đài Loan / Ô Long",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Lắc trước khi ra món",
+        procedure_M: "Cho đá vào ly → cho 40cc kem béo → cho trà đầy ly PP.",
+        procedure_L: "Cho đá vào ly → cho 60cc kem béo → cho trà đầy ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        ice_L: { normal: "Đến vạch 800ml", less: "Đến vạch 400ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "40cc kem béo + Trà ngọt đầy ly (ca: 300/0)", '70': "40cc kem béo + Trà ngọt vạch 500ml (ca: 200/100)", '50': "40cc kem béo + Trà ngọt vạch 350ml (ca: 150/150)", '30': "40cc kem béo + Trà ngọt vạch 200ml (ca: 100/200)", '0': "40cc kem béo + Trà lạt đầy ly (ca: 0/300)" },
+        formula_L: { '100': "60cc kem béo + Trà ngọt đầy ly (ca: 450/0)", '70': "60cc kem béo + Trà ngọt vạch 700ml (ca: 350/100)", '50': "60cc kem béo + Trà ngọt vạch 500ml (ca: 250/200)", '30': "60cc kem béo + Trà ngọt vạch 300ml (ca: 150/300)", '0': "60cc kem béo + Trà lạt đầy ly (ca: 0/450)" }
+      },
+      ts_tcdd: {
+        name: "Trà Sữa Trân Châu Đường Đen",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "▲ Ra món không cần lắc",
+        procedure_M: "2 vá TCĐĐ (120g) tráng ly → cho đá vào ly → cho 30cc kem béo → cho trà đầy ly PP.",
+        procedure_L: "2 vá TCĐĐ (120g) tráng ly → cho đá vào ly → cho 50cc kem béo → cho trà đầy ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        ice_L: { normal: "Đến vạch 800ml", less: "Đến vạch 400ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "2 vá TCĐĐ (120g) + 30cc kem béo + Trà ngọt đầy ly (ca: 300/0)", '70': "2 vá TCĐĐ + 30cc kem béo + Trà ngọt vạch 500ml (ca: 200/100)", '50': "2 vá TCĐĐ + 30cc kem béo + Trà ngọt vạch 350ml (ca: 150/150)", '30': "2 vá TCĐĐ + 30cc kem béo + Trà ngọt vạch 200ml (ca: 100/200)", '0': "2 vá TCĐĐ + 30cc kem béo + Trà lạt đầy ly (ca: 0/300)" },
+        formula_L: { '100': "2 vá TCĐĐ (120g) + 50cc kem béo + Trà ngọt đầy ly (ca: 450/0)", '70': "2 vá TCĐĐ + 50cc kem béo + Trà ngọt vạch 700ml (ca: 350/100)", '50': "2 vá TCĐĐ + 50cc kem béo + Trà ngọt vạch 500ml (ca: 250/200)", '30': "2 vá TCĐĐ + 50cc kem béo + Trà ngọt vạch 300ml (ca: 150/300)", '0': "2 vá TCĐĐ + 50cc kem béo + Trà lạt đầy ly (ca: 0/450)" }
+      },
+      ts_socola: {
+        name: "Trà Sữa Socola (Hồng Trà Đài Loan)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "Stir Khuấy đều trong ca",
+        procedure_M: "300ml trà đài loan vào ca trà → cho 40 kem béo + 30 sốt socola vào trà → khuấy đều → múc đá đầy ly PP.",
+        procedure_L: "400ml trà đài loan vào ca trà → cho 60 kem béo + 50 sốt socola vào trà → khuấy đều → múc đá đầy ly PP.",
+        notes: "LƯU Ý: Nếu có trân châu đường đen kem béo giảm 10cc (Ly M còn 30cc, Ly L còn 50cc).",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "40cc kem béo + 30cc sốt socola + 300ml trà có đường", '70': "40cc kem béo + 30cc sốt socola + 200ml trà có đường / 100ml không đường", '50': "40cc kem béo + 30cc sốt socola + 150ml trà có đường / 150ml không đường", '30': "40cc kem béo + 30cc sốt socola + 100ml trà có đường / 200ml không đường", '0': "40cc kem béo + 30cc sốt socola + 300ml trà không đường" },
+        formula_L: { '100': "60cc kem béo + 50cc sốt socola + 400ml trà có đường", '70': "60cc kem béo + 50cc sốt socola + 300ml trà có đường / 100ml không đường", '50': "60cc kem béo + 50cc sốt socola + 200ml trà có đường / 200ml không đường", '30': "60cc kem béo + 50cc sốt socola + 100ml trà có đường / 300ml không đường", '0': "60cc kem béo + 50cc sốt socola + 400ml trà không đường" }
+      },
+      ts_khoai_mon: {
+        name: "Trà Sữa Khoai Môn Nghiền (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Lắc trước khi ra món (có TC nấu)",
+        procedure: "Cho vào ly PP 1,5 viên Khoai Môn Nghiền khoảng (120g) → kem béo (40cc) → tiếp đến cho trà → dùng muỗng khuấy vừa phải → đá.",
+        notes: "LƯU Ý: Nếu có trân châu đường đen kem béo giảm 10cc (còn 30cc). Có trân châu nấu, pha chế trực tiếp trong ly PP. Lắc trước khi ra món. Không để được nhiều đá.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "CẤM: Không để được nhiều đá" },
+        formula_M: { 
+          '100': "1,5 viên khoai môn (120g) + 40cc kem béo + 300ml trà có đường", 
+          '70': "1,5 viên khoai môn (120g) + 40cc kem béo + 200ml có đường / 100ml không đường", 
+          '50': "1,5 viên khoai môn (120g) + 40cc kem béo + 150ml có đường / 150ml không đường", 
+          '30': "1,5 viên khoai môn (120g) + 40cc kem béo + 100ml có đường / 200ml không đường", 
+          '0': "1,5 viên khoai môn (120g) + 40cc kem béo + 300ml trà không đường" 
+        }
+      },
+      st_tcdd: {
+        name: "Sữa Tươi Trân Châu Đường Đen",
+        sizes: ['M', 'L'],
+        sugars: ['100', '50', '0'],
+        action: "▲ Ra món không cần lắc",
+        procedure_M: "2 vá TCĐĐ (120g) tráng ly → đá đến 600ml (nhiều đá: đầy ly) → hỗn hợp sữa tươi (đá thường: 300ml, đá nhiều: 200ml) + nước đường khuấy đều cho vào ly PP.",
+        procedure_L: "2 vá TCĐĐ (120g) tráng ly → đá đến 800ml (nhiều đá: đầy ly) → hỗn hợp sữa tươi (đá thường: 360ml, đá nhiều: 300ml) + nước đường khuấy đều cho vào ly PP.",
+        ice_M: { normal: "Đến vạch 600ml (300ml sữa)", less: "Đến vạch 300ml (300ml sữa)", none: "Không cho đá (300ml sữa)", more: "Đầy ly (GIẢM còn 200ml sữa)" },
+        ice_L: { normal: "Đến vạch 800ml (360ml sữa)", less: "Đến vạch 400ml (360ml sữa)", none: "Không cho đá (360ml sữa)", more: "Đầy ly (GIẢM còn 300ml sữa)" },
+        formula_M: { '100': "2 vá TCĐĐ (120g) + Nước đường 20cc", '50': "2 vá TCĐĐ (120g) + Nước đường 10cc", '0': "2 vá TCĐĐ (120g) + Nước đường 0cc" },
+        formula_L: { '100': "2 vá TCĐĐ (120g) + Nước đường 30cc", '50': "2 vá TCĐĐ (120g) + Nước đường 15cc", '0': "2 vá TCĐĐ (120g) + Nước đường 0cc" }
+      },
+      st_khoai_mon: {
+        name: "Sữa Tươi Khoai Môn Nghiền (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '50', '0'],
+        action: "Stir Dùng muỗng khuấy vừa phải",
+        procedure: "1,5 viên khoai môn nghiền (120g) cho vào ly PP → tiếp đến cho 300ml sữa tươi + nước đường vào ly PP → dùng muỗng khuấy vừa phải → cho đá đến đầy ly.",
+        notes: "Chỉ có ly M. Không để được nhiều đá.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "CẤM: Không để được nhiều đá" },
+        formula_M: { '100': "1,5 viên khoai môn (120g) + 300ml sữa tươi + 20cc nước đường", '50': "1,5 viên khoai môn (120g) + 300ml sữa tươi + 10cc nước đường", '0': "1,5 viên khoai môn (120g) + 300ml sữa tươi + 0cc nước đường" }
+      },
+      latte_hong_tra: {
+        name: "Hồng Trà Latte",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "Stir Thức uống pha chế cần khuấy",
+        procedure_M: "120ml sữa tươi và 5cc nước đường vào ca định lượng khuấy đều cho vào ly PP → cho 250ml trà → cho đá vào ly PP.",
+        procedure_L: "150ml sữa tươi và 10cc nước đường vào ca định lượng khuấy đều cho vào ly PP → cho 350ml trà → cho đá vào ly PP.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "120ml sữa + 5cc đường + 250ml trà có đường", '70': "120ml sữa + (0cc đường) + 250ml trà có đường", '50': "120ml sữa + (0cc đường) + 200ml trà có đường / 50ml không đường", '30': "120ml sữa + (0cc đường) + 150ml trà có đường / 100ml không đường", '0': "120ml sữa + (0cc đường) + 250ml trà không đường" },
+        formula_L: { '100': "150ml sữa + 10cc đường + 350ml trà có đường", '70': "150ml sữa + (0cc đường) + 350ml trà có đường", '50': "150ml sữa + (0cc đường) + 250ml trà có đường / 100ml không đường", '30': "150ml sữa + (0cc đường) + 150ml trà có đường / 200ml không đường", '0': "150ml sữa + (0cc đường) + 350ml trà không đường" }
+      },
+      latte_tcdd: {
+        name: "Trân Châu Đường Đen Latte",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "Stir Thức uống pha chế cần khuấy",
+        procedure_M: "2 vá TCĐĐ (120g) tráng ly → cho hỗn hợp 120ml sữa tươi và 5cc nước đường đã khuấy đều cho vào ly PP → cho 250ml trà → cho đá vào ly PP.",
+        procedure_L: "2 vá TCĐĐ (120g) tráng ly → cho hỗn hợp 150ml sữa tươi và 10cc nước đường đã khuấy đều cho vào ly PP → cho 350ml trà → cho đá vào ly PP.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "2 vá TCĐĐ + 120ml sữa + 5cc đường + 250ml trà có đường", '70': "2 vá TCĐĐ + 120ml sữa + 250ml trà có đường", '50': "2 vá TCĐĐ + 120ml sữa + 200ml có đường / 50ml không đường", '30': "2 vá TCĐĐ + 120ml sữa + 150ml có đường / 100ml không đường", '0': "2 vá TCĐĐ + 120ml sữa + 250ml trà không đường" },
+        formula_L: { '100': "2 vá TCĐĐ + 150ml sữa + 10cc đường + 350ml trà có đường", '70': "2 vá TCĐĐ + 150ml sữa + 350ml trà có đường", '50': "2 vá TCĐĐ + 150ml sữa + 250ml có đường / 100ml không đường", '30': "2 vá TCĐĐ + 150ml sữa + 150ml có đường / 200ml không đường", '0': "2 vá TCĐĐ + 150ml sữa + 350ml trà không đường" }
+      },
+      latte_bi_dao: {
+        name: "Bí Đao Latte / Vải Thiều Latte",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70'],
+        action: "Stir Thức uống pha chế cần khuấy",
+        procedure_M: "120ml sữa tươi và 5cc nước đường vào ca định lượng khuấy đều cho vào ly PP → cho 250ml trà → cho đá vào ly PP.",
+        procedure_L: "150ml sữa tươi và 10cc nước đường vào ca định lượng khuấy đều cho vào ly PP → cho 350ml trà → cho đá vào ly PP.",
+        notes: "Ghi chú SOP: Bí đao latte, Vải thiều latte giảm tối đa 70% đường.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        ice_L: { normal: "Đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { '100': "120ml sữa tươi + 5cc nước đường + 250ml cốt trà bí đao/vải", '70': "120ml sữa tươi + (0cc đường) + 250ml cốt trà bí đao/vải" },
+        formula_L: { '100': "150ml sữa tươi + 10cc nước đường + 350ml cốt trà bí đao/vải", '70': "150ml sữa tươi + (0cc đường) + 350ml cốt trà bí đao/vải" }
+      },
+      o_long_dao: {
+        name: "Ô Long Đào (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Lắc trước khi ra món",
+        procedure: "5 miếng đào (25g) → 20cc nước đào → 1 vá thạch đào (45g) → cho đá vào → cho trà vào ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "5 miếng đào + 20cc nước đào + 1 vá thạch đào + Trà ngọt đầy ly (ca: 300/0)", '70': "5 miếng đào + 20cc nước đào + 1 vá thạch đào + Trà ngọt vạch 500ml (ca: 200/100)", '50': "5 miếng đào + 20cc nước đào + 1 vá thạch đào + Trà ngọt vạch 350ml (ca: 150/150)", '30': "5 miếng đào + 20cc nước đào + 1 vá thạch đào + Trà ngọt vạch 200ml (ca: 100/200)", '0': "5 miếng đào + 20cc nước đào + 1 vá thạch đào + Trà lạt đầy ly (ca: 0/300)" }
+      },
+      o_long_nho: {
+        name: "Ô Long Nho (Chỉ Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Ra món lưu ý lắc đều. Lắc trước khi ra món",
+        procedure: "Cho (50g) mứt nho vào ly PP → dùng chày dầm mứt nho ở mức vừa phải → cho tiếp (30cc) sốt nho → đá → cho trà vào ly PP.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 300ml", none: "Không cho đá", more: "Đầy ly" },
+        formula_M: { '100': "50g mứt nho (dầm vừa phải) + 30cc sốt nho + Trà ngọt đầy ly (ca: 300/0)", '70': "50g mứt nho + 30cc sốt nho + Trà ngọt vạch 500ml (ca: 200/100)", '50': "50g mứt nho + 30cc sốt nho + Trà ngọt vạch 350ml (ca: 150/150)", '30': "50g mứt nho + 30cc sốt nho + Trà ngọt vạch 200ml (ca: 100/200)", '0': "50g mứt nho + 30cc sốt nho + Trà lạt đầy ly (ca: 0/300)" }
+      },
+      oi_hong: {
+        name: "Màu Hồng Lãng Mạn (Trà Chanh Ổi Hồng - Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50', '30', '0'],
+        action: "◎ Lắc trước khi ra món",
+        procedure: "Bước 1: Lấy ly đong 70cc nước cốt ổi hồng và 10cc nước cốt chanh cho vào ly PP → Bước 2: Cho nước đường + 1 lát chanh vào ly PP → Bước 3: Cho đá vào ly PP → Cho nước lọc vào đầy ly PP.",
+        ice_M: { normal: "Đến vạch 600ml, nước đầy ly", less: "Đến vạch 300ml, nước vào ly đến 600ml", none: "Không đá: đong 250ml nước lọc vào ca", more: "Đá đầy ly, nước đầy ly" },
+        formula_M: { '100': "70cc cốt ổi + 10cc chanh + 1 lát chanh + 60ml nước đường + nước lọc", '70': "70cc cốt ổi + 10cc chanh + 1 lát chanh + 45ml nước đường + nước lọc", '50': "70cc cốt ổi + 10cc chanh + 1 lát chanh + 30ml nước đường + nước lọc", '30': "70cc cốt ổi + 10cc chanh + 1 lát chanh + 20ml nước đường + nước lọc", '0': "70cc cốt ổi + 10cc chanh + 1 lát chanh + 0ml nước đường + nước lọc" }
+      },
+      kem_cheese: {
+        name: "Hồng Trà / Trà Xanh / Ô Long Kem Cheese (Ly M)",
+        sizes: ['M'],
+        sugars: ['100', '50', '0'],
+        action: "▲ Không lắc ly (Đậy nắp trực tiếp)",
+        procedure: "Cho 350ml trà vào ly PP → Cho đá → Cho kem cheese đến gần đầy ly (khoảng 60gram) → Đậy nắp.",
+        notes: "CẤM: Thức uống KHÔNG THỂ KHÔNG CHO ĐÁ và KHÔNG THỂ CHO NHIỀU ĐÁ! Không dùng bột ớt.",
+        ice_M: { normal: "Đến vạch 600ml", less: "Đến vạch 450ml (kem cheese đến 600ml)", none: "CẤM: Không thể không cho đá", more: "CẤM: Không thể cho nhiều đá" },
+        formula_M: { '100': "350ml trà có đường + 60g kem cheese", '50': "250ml trà có đường + 100ml trà không đường + 60g kem cheese", '0': "350ml trà không đường + 60g kem cheese" }
+      },
+      // CẬP NHẬT CHUẨN CÔNG THỨC MỚI BÁT BẢO NGÔ GIA THEO THÔNG BÁO 004-1225/TB-HTNG
+      bat_bao: {
+        name: "Bát Bảo Ngô Gia (Công thức mới áp dụng từ 17/12/2025)",
+        sizes: ['M'],
+        sugars: ['100', '70', '50'],
+        action: "▲ Ra món không cần lắc",
+        procedure: "1 vá nhỏ Trân Châu Đường Đen (60g) → Nửa vá Bánh Vuông Đường Đen (25g) → Nửa vá Trân Châu Củ Năng (25g) → 1 vá Sương Sáo (40g) → 1 vá Thạch Dừa Nguyên Vị (40g) → Nửa vá Hạt Sen (25g) → Nửa vá 3Q Trắng (20g) → Cho đá đầy ly → Cho trà.",
+        notes: "CÔNG THỨC MỚI: Dùng Bánh Vuông Đường Đen (25g) và Trân Châu Củ Năng (25g). 100% đường dùng 200ml Trà Bí Đao; 70% & 50% giảm đường bằng Trà Xanh hoặc Hồng Trà.",
+        ice_M: { normal: "Đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "Đá đầy ly" },
+        formula_M: { 
+          '100': "7 Topping mới + 200ml Trà Bí Đao", 
+          '70': "7 Topping mới + 150ml Trà Bí Đao + 50ml Trà Xanh/Hồng Trà", 
+          '50': "7 Topping mới + 100ml Trà Bí Đao + 100ml Trà Xanh/Hồng Trà" 
+        }
+      },
+      xi_muoi_ngogia: {
+        name: "Trà Xí Muội Ngô Gia",
+        sizes: ['M', 'L'],
+        sugars: ['100'],
+        action: "◎ Lắc trước khi ra món",
+        procedure: "Cho 2 vá hạt é (60gram) vào ly PP → 1 vá thạch Aiyu (40gram) → Đá → Trà xí muội Ngô Gia → Hoàn thành.",
+        notes: "Thức uống này cố định độ ngọt.",
+        ice_M: { normal: "Đến vạch 600ml (trà đầy ly)", less: "Đến vạch 300ml (đong 300ml trà)", none: "Không đá (đong 300ml trà)", more: "Đầy ly (trà đầy ly)" },
+        ice_L: { normal: "Đến vạch 800ml (trà đầy ly)", less: "Đến vạch 400ml (đong 400ml trà)", none: "Không đá (đong 400ml trà)", more: "Đầy ly (trà đầy ly)" },
+        formula_M: { '100': "2 vá hạt é (60g) + 1 vá Aiyu (40g) + 300ml Trà xí muội Ngô Gia" },
+        formula_L: { '100': "2 vá hạt é (60g) + 1 vá Aiyu (40g) + 400ml Trà xí muội Ngô Gia" }
+      },
+      xi_muoi_bidao: {
+        name: "Trà Xí Muội Bí Đao (Mix)",
+        sizes: ['M', 'L'],
+        sugars: ['100'],
+        action: "◎ Lắc trước khi ra món",
+        procedure: "Cho 2 vá hạt é (60gram) vào ly PP → 1 vá thạch Aiyu (40gram) → Trà bí đao Ngô Gia → Trà xí muội Ngô Gia → Đá → Hoàn thành.",
+        notes: "Thức uống này cố định độ ngọt. Thức uống không thể cho nhiều đá.",
+        ice_M: { normal: "Cho đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "CẤM: Không thể cho nhiều đá" },
+        ice_L: { normal: "Cho đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "CẤM: Không thể cho nhiều đá" },
+        formula_M: { '100': "2 vá hạt é (60g) + 1 vá Aiyu (40g) + 150ml Trà Bí Đao + 150ml Trà Xí Muội" },
+        formula_L: { '100': "2 vá hạt é (60g) + 1 vá Aiyu (40g) + 200ml Trà Bí Đao + 200ml Trà Xí Muội" }
+      },
+      xi_muoi_olong: {
+        name: "Trà Xí Muội Ô Long (Mix)",
+        sizes: ['M', 'L'],
+        sugars: ['100', '70', '50'],
+        action: "◎ Lắc trước khi ra món",
+        procedure: "Cho 2 vá hạt é (60gram) vào ly PP → 1 vá thạch Aiyu (40gram) → Trà xí muội Ngô Gia → Trà ôlong mộc hương → Đá → Hoàn thành.",
+        notes: "Thức uống không thể cho nhiều đá. Giảm tối đa 50% đường.",
+        ice_M: { normal: "Cho đá đầy ly", less: "Đến vạch 600ml", none: "Không cho đá", more: "CẤM: Không thể cho nhiều đá" },
+        ice_L: { normal: "Cho đá đầy ly", less: "Đến vạch 800ml", none: "Không cho đá", more: "CẤM: Không thể cho nhiều đá" },
+        formula_M: { '100': "2 vá hạt é + 1 vá Aiyu + 150ml Xí muội + 150ml Ô Long có đường", '70': "2 vá hạt é + 1 vá Aiyu + 150ml Xí muội + 100ml Ô Long có đường / 50ml không đường", '50': "2 vá hạt é + 1 vá Aiyu + 150ml Xí muội + 150ml Ô Long không đường" },
+        formula_L: { '100': "2 vá hạt é + 1 vá Aiyu + 200ml Xí muội + 200ml Ô Long có đường", '70': "2 vá hạt é + 1 vá Aiyu + 200ml Xí muội + 100ml Ô Long có đường / 100ml không đường", '50': "2 vá hạt é + 1 vá Aiyu + 200ml Xí muội + 200ml Ô Long không đường" }
+      }
+    };
+
+    let curState = { size: 'M', ice: 'normal', sugar: '100' };
+
+    function onDrinkChange() {
+      const d = document.getElementById('sel-drink').value;
+      const item = SOP_DATA[d];
+      
+      if (item.sizes.length === 1) {
+        document.getElementById('chip-size-L').classList.add('disabled');
+        curState.size = 'M';
+        document.getElementById('chip-size-M').classList.add('active');
+        document.getElementById('chip-size-L').classList.remove('active');
+      } else {
+        document.getElementById('chip-size-L').classList.remove('disabled');
+      }
+
+      ['100', '70', '50', '30', '0'].forEach(s => {
+        const chip = document.getElementById(`chip-sug-${s}`);
+        if (item.sugars.includes(s)) {
+          chip.classList.remove('disabled');
+        } else {
+          chip.classList.add('disabled');
+        }
+      });
+
+      if (!item.sugars.includes(curState.sugar)) {
+        curState.sugar = item.sugars[0];
+        document.querySelectorAll('#sugar-chip-group .chip').forEach(c => c.classList.remove('active'));
+        document.getElementById(`chip-sug-${curState.sugar}`).classList.add('active');
+      }
+
+      runCalc();
+    }
+
+    function setChip(type, val, el) {
+      if (el.classList.contains('disabled')) {
+        alert("Tùy chọn này không áp dụng cho món đang chọn theo chuẩn SOP!");
+        return;
+      }
+      curState[type] = val;
+      el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      runCalc();
+    }
+
+    function tabNav(id, el) {
+      document.querySelectorAll('.tab-view').forEach(e => e.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+      document.getElementById('tab-' + id).classList.add('active');
+      el.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (id === 'quiz' && curQuizList.length === 0) loadQuizExam(0);
+      if (id === 'cloze' && !document.getElementById('cloze-list').hasChildNodes()) loadClozeExam(0);
+    }
+
+    function toggleAcc(el) {
+      el.parentElement.classList.toggle('active');
+    }
+
+    function runCalc() {
+      const d = document.getElementById('sel-drink').value;
+      const s = curState.size;
+      const ice = curState.ice;
+      const sug = curState.sugar;
+      const res = document.getElementById('lookup-result');
+      const item = SOP_DATA[d];
+
+      const iceMap = s === 'M' ? item.ice_M : item.ice_L;
+      const iceTxt = iceMap ? iceMap[ice] : "Theo quy chuẩn SOP";
+
+      const formulaMap = s === 'M' ? item.formula_M : item.formula_L;
+      const formulaTxt = formulaMap ? formulaMap[sug] : "Theo quy chuẩn SOP";
+
+      const procTxt = (s === 'L' && item.procedure_L) ? item.procedure_L : (item.procedure_M || item.procedure);
+
+      let actionBadgeClass = "badge-no-shake";
+      if (item.action.includes("Lắc")) actionBadgeClass = "badge-shake";
+      if (item.action.includes("khuấy") || item.action.includes("Khuấy")) actionBadgeClass = "badge-stir";
+
+      res.innerHTML = `
+        <div class="result-row"><i class="fa-solid fa-cube" style="color:#0284c7; margin-top:3px;"></i> <div><strong>Mức Đá:</strong> ${iceTxt}</div></div>
+        <div class="result-row"><i class="fa-solid fa-droplet" style="color:var(--primary); margin-top:3px;"></i> <div><strong>Định Lượng / Độ Đường:</strong> ${formulaTxt}</div></div>
+        <div class="result-row"><i class="fa-solid fa-hand" style="color:var(--warning); margin-top:3px;"></i> <div><strong>Thao Tác Ra Món:</strong> <span class="badge ${actionBadgeClass}">${item.action}</span></div></div>
+        <div class="steps-box">
+          <div style="font-weight:700; color:var(--primary); margin-bottom:4px; font-size:0.78rem;"><i class="fa-solid fa-arrow-right-arrow-left"></i> QUY TRÌNH THAO TÁC CHUẨN:</div>
+          <div style="font-size:0.83rem; line-height:1.5; color:#334155;"><strong>${procTxt}</strong></div>
+          ${item.notes ? `<div style="font-size:0.75rem; color:#64748b; margin-top:5px;"><i class="fa-solid fa-circle-info"></i> ${item.notes}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderProcessAccordion() {
+      const container = document.getElementById('process-accordion-container');
+      let html = '';
+      let idx = 1;
+      for (const key in SOP_DATA) {
+        const item = SOP_DATA[key];
+        const proc = item.procedure_M ? `Ly M: ${item.procedure_M}<br>Ly L: ${item.procedure_L}` : item.procedure;
+        html += `
+          <div class="acc-item ${idx === 1 ? 'active' : ''}">
+            <div class="acc-header" onclick="toggleAcc(this)">
+              <span>${idx}. ${item.name}</span><i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="acc-body">
+              <div style="margin-bottom:6px;"><strong>Thao tác:</strong> <span class="badge ${item.action.includes('Lắc') ? 'badge-shake' : item.action.includes('khuấy') ? 'badge-stir' : 'badge-no-shake'}">${item.action}</span></div>
+              <div style="margin-bottom:6px;"><strong>Quy trình:</strong> ${proc}</div>
+              ${item.notes ? `<div style="font-size:0.76rem; color:#64748b;"><em>Ghi chú: ${item.notes}</em></div>` : ''}
+            </div>
+          </div>
+        `;
+        idx++;
+      }
+      container.innerHTML = html;
+    }
+
+    // ==========================================
+    // KHO 10 BỘ ĐỀ TRẮC NGHIỆM ĐÃ CẬP NHẬT CHUẨN
+    // ==========================================
+    const QUIZ_BANK = [
+      // ĐỀ 1: NHẬP MÔN & 20 TOPPING CHUẨN
+      [
+        { q: "Nguyên tắc quản lý nguyên liệu cơ bản hàng ngày của Ngô Gia là gì?", opts: ["Nhập sau xuất trước", "Nhập trước xuất trước (FIFO) và định vị rõ ràng", "Dùng tùy ý theo vị trí gần tay", "Ưu tiên dùng đồ mới nhập trước"], a: 1, exp: "Trang 3: Luôn tuân thủ nguyên tắc 'nhập trước xuất trước' và 'định vị rõ ràng'." },
+        { q: "Định lượng Topping Đào Miếng trên mỗi khẩu phần là bao nhiêu?", opts: ["3 miếng — 15g", "5 miếng — 25g", "4 miếng — 30g", "6 miếng — 40g"], a: 1, exp: "Trang 6: STT 9 Đào Miếng = 5 miếng — 25G." },
+        { q: "Định lượng Thạch Sương Sáo trên mỗi khẩu phần là bao nhiêu?", opts: ["1 vá — 40g", "2 vá — 80g", "2 vá — 60g", "1 vá — 50g"], a: 1, exp: "Trang 6: STT 4 Thạch sương sáo = 2 vá — 80G." },
+        { q: "Định lượng Kem Vani chuẩn trên mỗi khẩu phần là bao nhiêu?", opts: ["1 viên — 50g", "1 viên — 60g", "1 viên — 70g", "2 viên — 100g"], a: 1, exp: "Trang 6: STT 12 Kem vani = 1 viên — 60G." },
+        { q: "Định lượng Trân Châu Đường Đen khi thêm topping là bao nhiêu?", opts: ["1 vá — 60g", "2 vá — 100g", "2 vá — 120g", "3 vá — 150g"], a: 2, exp: "Trang 6: STT 14 Trân châu đường đen = 2 vá — 120G." },
+        { q: "Định lượng Trân Châu Hoàng Kim Baby là bao nhiêu?", opts: ["2 vá — 100g", "2 vá — 120g", "1 vá — 50g", "1 vá — 60g"], a: 0, exp: "Trang 6: STT 15 Trân châu hoàng kim baby = 2 vá — 100G." },
+        { q: "Định lượng Topping Hạt Sen chuẩn là bao nhiêu?", opts: ["1 vá — 40g", "1 vá — 50g", "2 vá — 60g", "1 vá — 60g"], a: 1, exp: "Trang 6: STT 16 Hạt sen = 1 vá — 50G." },
+        { q: "Định lượng Thạch Sợi Lá Dứa trên mỗi khẩu phần là bao nhiêu?", opts: ["2 vá — 80g", "1 vá — 50g", "2 vá — 70g", "2 vá — 60g"], a: 2, exp: "Trang 6: STT 20 Thạch sợi lá dứa = 2 vá — 70G." },
+        { q: "Định lượng Thạch Q trên mỗi khẩu phần chuẩn là bao nhiêu?", opts: ["1 vá — 40g", "2 vá — 80g", "1 vá — 50g", "Nửa vá — 20g"], a: 0, exp: "Trang 6: STT 2 Thạch Q = 1 vá — 40G." },
+        { q: "Trước khi đưa đồ uống cho khách hàng, nhân viên bắt buộc phải kiểm tra điều gì?", opts: ["Đúng order, kiểm tra đủ ống hút, túi, muỗng và topping", "Chỉ cần nhìn xem ly có bị dơ không", "Đưa thật nhanh không cần nhìn lại", "Chỉ cần đếm đủ số lượng ly"], a: 0, exp: "Trang 3: Cần kiểm tra cẩn thận đúng order, đảm bảo ống hút, túi, muỗng và topping đầy đủ." }
+      ],
+      // ĐỀ 2: DÒNG TRÀ ĐƠN & VẠCH RÓT
+      [
+        { q: "Khi pha Trà Đơn nhiều đá hoặc đá bình thường, ta chia tỉ lệ trà dựa trên đâu?", opts: ["Ca định lượng", "Ly PP (ly bán cho khách)", "Bình shaker", "Cốc đong mililit"], a: 1, exp: "Trang 7: Pha chế nhiều đá, đá bình thường chia tỉ lệ dựa trên ly PP." },
+        { q: "Khi pha Trà Đơn ít đá hoặc không đá, ta chia tỉ lệ trà dựa trên đâu?", opts: ["Ly PP", "Ca định lượng (ca múc trà) rồi mới đổ vào ly PP", "Ước lượng bằng mắt trên ly", "Đong bằng shaker"], a: 1, exp: "Trang 7: Pha chế ít đá, không đá đong trà chia tỉ lệ dựa trên ca định lượng." },
+        { q: "Ly M Trà Đơn 70% đường (đá bình thường), ta rót trà ngọt tới vạch nào?", opts: ["Vạch 350ml", "Vạch 500ml", "Vạch 600ml", "Đầy ly"], a: 1, exp: "Trang 7: Ly 700cc (M) 70% đường rót trà ngọt đến vạch 500ml, còn lại châm đầy ly bằng trà lạt." },
+        { q: "Ly M Trà Đơn 50% đường (đá bình thường), rót trà ngọt đến vạch nào?", opts: ["Vạch 200ml", "Vạch 350ml", "Vạch 500ml", "Vạch 300ml"], a: 1, exp: "Trang 7: Ly 700cc (M) 50% đường rót trà ngọt đến vạch 350ml, còn lại đầy ly trà lạt." },
+        { q: "Ly M Trà Đơn 30% đường (đá bình thường), rót trà ngọt đến vạch nào?", opts: ["Vạch 100ml", "Vạch 150ml", "Vạch 200ml", "Vạch 250ml"], a: 2, exp: "Trang 7: Ly 700cc (M) 30% đường rót trà ngọt đến vạch 200ml, còn lại đầy ly trà lạt." },
+        { q: "Ly L Trà Đơn (1000cc) 70% đường (đá bình thường), rót trà ngọt đến vạch nào?", opts: ["Vạch 500ml", "Vạch 700ml", "Vạch 800ml", "Vạch 600ml"], a: 1, exp: "Trang 7: Ly 1000cc (L) 70% đường rót trà ngọt đến vạch 700ml, còn lại đầy ly trà lạt." },
+        { q: "Ly L Trà Đơn (1000cc) 50% đường (đá bình thường), rót trà ngọt đến vạch nào?", opts: ["Vạch 300ml", "Vạch 400ml", "Vạch 500ml", "Vạch 600ml"], a: 2, exp: "Trang 7: Ly 1000cc (L) 50% đường rót trà ngọt đến vạch 500ml, còn lại đầy ly trà lạt." },
+        { q: "Ly M Trà Đơn không đá (0% đường) dùng ca đong bao nhiêu ml trà lạt?", opts: ["300ml", "350ml", "400ml", "500ml"], a: 1, exp: "Trang 7: Ly 700cc không đá đong 350ml trà lạt (không đường)." },
+        { q: "Ly L Trà Đơn không đá (0% đường) dùng ca đong bao nhiêu ml trà lạt?", opts: ["450ml", "500ml", "600ml", "700ml"], a: 1, exp: "Trang 7: Ly 1000cc không đá đong 500ml trà lạt (không đường)." },
+        { q: "Hai loại trà nào trong dòng Trà Đơn được ghi chú CỐ ĐỊNH ĐỘ ĐƯỜNG?", opts: ["Hồng trà và Trà xanh", "Trà Ô long và Trà xanh", "Hồng trà vải thiều và Trà bí đao", "Trà bí đao và Trà ô long"], a: 2, exp: "Trang 7: Ghi chú: hồng trà vải thiều, trà bí đao cố định độ đường." }
+      ],
+      // ĐỀ 3: DÒNG TRÀ SỮA & TRÀ SỮA SOCOLA
+      [
+        { q: "Định lượng kem béo cho 1 ly Trà Sữa Đài Loan size M là bao nhiêu?", opts: ["30cc", "40cc", "50cc", "60cc"], a: 1, exp: "Trang 10: Ly M cho 40cc kem béo." },
+        { q: "Định lượng kem béo cho 1 ly Trà Sữa Đài Loan size L là bao nhiêu?", opts: ["40cc", "50cc", "60cc", "70cc"], a: 2, exp: "Trang 10: Ly L cho 60cc kem béo." },
+        { q: "Thao tác ra món chuẩn của Trà Sữa Đài Loan là gì?", opts: ["▲ Không lắc ly", "◎ Lắc trước khi ra món", "Khuấy tròn 3 vòng", "Đậy nắp đưa luôn"], a: 1, exp: "Trang 10: Ký hiệu ◎ Lắc trước khi ra món." },
+        { q: "Ly M Trà Sữa Đài Loan (ít đá/không đá) 50% đường đong tỉ lệ trà trong ca là?", opts: ["100ml ngọt / 200ml lạt", "150ml ngọt / 150ml lạt", "200ml ngọt / 100ml lạt", "300ml ngọt / 0ml lạt"], a: 1, exp: "Trang 10: Ly M 50% đường đong 150ml trà có đường / 150ml trà không đường." },
+        { q: "Ly L Trà Sữa Đài Loan (ít đá/không đá) 70% đường đong tỉ lệ trà trong ca là?", opts: ["350ml ngọt / 100ml lạt", "250ml ngọt / 200ml lạt", "300ml ngọt / 150ml lạt", "450ml ngọt / 0ml lạt"], a: 0, exp: "Trang 10: Ly L 70% đường đong 350ml trà có đường / 100ml trà không đường." },
+        { q: "Dòng trà thích hợp để sử dụng pha Trà Sữa Socola là gì?", opts: ["Trà Xanh Hoa Nhài", "Trà Ô Long Mộc Hương", "Hồng Trà Đài Loan", "Trà Bí Đao"], a: 2, exp: "Trang 22: Dòng trà thích hợp để sử dụng - Hồng Trà Đài Loan." },
+        { q: "Quy trình Trà Sữa Socola ly M cần bao nhiêu kem béo và sốt socola?", opts: ["30cc kem béo + 30cc sốt socola", "40cc kem béo + 30cc sốt socola", "40cc kem béo + 40cc sốt socola", "50cc kem béo + 30cc sốt socola"], a: 1, exp: "Trang 22: Ly M dùng 40cc kem béo + 30cc sốt socola + 300ml trà." },
+        { q: "Quy trình Trà Sữa Socola ly L cần bao nhiêu kem béo và sốt socola?", opts: ["50cc kem béo + 40cc sốt socola", "60cc kem béo + 50cc sốt socola", "60cc kem béo + 60cc sốt socola", "50cc kem béo + 50cc sốt socola"], a: 1, exp: "Trang 22: Ly L dùng 60cc kem béo + 50cc sốt socola + 400ml trà." },
+        { q: "Nếu khách thêm Trân Châu Đường Đen vào Trà Sữa Socola, kem béo điều chỉnh thế nào?", opts: ["Giữ nguyên", "Giảm 10cc kem béo", "Tăng 10cc kem béo", "Giảm nửa sốt socola"], a: 1, exp: "Trang 22: LƯU Ý: Nếu có trân châu đường đen kem béo giảm 10cc." },
+        { q: "Thao tác kỹ thuật của Trà Sữa Socola trước khi cho đá vào ly là gì?", opts: ["Lắc mạnh trong shaker", "Khuấy đều hỗn hợp trà, kem béo, sốt socola trong ca", "Đổ thẳng vào ly không khuấy", "Xay với đá nhuyễn"], a: 1, exp: "Trang 22: Cho trà vào ca trà → cho kem béo + sốt socola vào trà → khuấy đều → múc đá đầy ly." }
+      ],
+      // ĐỀ 4: DÒNG TRÂN CHÂU ĐƯỜNG ĐEN & SỮA TƯƠI TCĐĐ
+      [
+        { q: "Định lượng trân châu đường đen dùng để tráng ly cho Trà Sữa TCĐĐ là?", opts: ["1 vá (60g)", "2 vá (120g)", "1.5 vá (90g)", "2 vá (100g)"], a: 1, exp: "Trang 11: 2 vá TCĐĐ (120g) tráng ly." },
+        { q: "Lượng kem béo cho Trà Sữa Trân Châu Đường Đen ly M là bao nhiêu?", opts: ["20cc", "30cc", "40cc", "50cc"], a: 1, exp: "Trang 11: Ly M dùng 30cc kem béo (giảm 10cc so với trà sữa thường)." },
+        { q: "Lượng kem béo cho Trà Sữa Trân Châu Đường Đen ly L là bao nhiêu?", opts: ["40cc", "50cc", "60cc", "70cc"], a: 1, exp: "Trang 11: Ly L dùng 50cc kem béo." },
+        { q: "Thao tác ra món của Trà Sữa Trân Châu Đường Đen là gì?", opts: ["Lắc thật mạnh", "Ra món không cần lắc (▲)", "Dùng muỗng khuấy 5 vòng", "Cho khách tự lắc"], a: 1, exp: "Trang 11: Ký hiệu ▲ Ra món không cần lắc." },
+        { q: "Món Sữa Tươi Trân Châu Đường Đen có dùng cốt trà không?", opts: ["Có, dùng hồng trà", "Có, dùng trà ô long", "Không dùng cốt trà", "Dùng trà bí đao"], a: 2, exp: "Trang 12: Món này chỉ gồm sữa tươi + nước đường + TCĐĐ, không dùng cốt trà." },
+        { q: "Lượng sữa tươi cho Sữa Tươi TCĐĐ ly M (đá bình thường) là bao nhiêu?", opts: ["250ml", "300ml", "350ml", "200ml"], a: 1, exp: "Trang 12: Ly M đá bình thường dùng 300ml sữa tươi." },
+        { q: "Lượng sữa tươi cho Sữa Tươi TCĐĐ ly L (đá bình thường) là bao nhiêu?", opts: ["300ml", "360ml", "400ml", "450ml"], a: 1, exp: "Trang 12: Ly L đá bình thường dùng 360ml sữa tươi." },
+        { q: "Khi khách gọi Sữa Tươi TCĐĐ 'Nhiều đá', lượng sữa tươi điều chỉnh ra sao?", opts: ["Giữ nguyên", "Ly M giảm còn 200ml, Ly L giảm còn 300ml", "Ly M giảm còn 250ml, Ly L giảm còn 320ml", "Tăng thêm sữa tươi"], a: 1, exp: "Trang 12: Sữa tươi TCĐĐ (Đá nhiều): Ly M dùng 200ml sữa, Ly L dùng 300ml sữa tươi." },
+        { q: "Nước đường cho Sữa Tươi TCĐĐ ly M ở mức 100% và 50% lần lượt là?", opts: ["20cc và 10cc", "30cc và 15cc", "15cc và 10cc", "25cc và 15cc"], a: 0, exp: "Trang 12: Ly M nước đường 100% là 20cc, 50% là 10cc, 0% là 0cc." },
+        { q: "Nước đường cho Sữa Tươi TCĐĐ ly L ở mức 100% và 50% lần lượt là?", opts: ["20cc và 10cc", "25cc và 15cc", "30cc và 15cc", "40cc và 20cc"], a: 2, exp: "Trang 12: Ly L nước đường 100% là 30cc, 50% là 15cc, 0% là 0cc." }
+      ],
+      // ĐỀ 5: DÒNG TRÀ LATTE
+      [
+        { q: "Quy trình pha dòng Trà Latte bắt đầu bằng thao tác nào?", opts: ["Rót trà vào ly trước", "Cho sữa tươi và nước đường vào ca định lượng khuấy đều trước", "Cho đá vào ly trước", "Lắc sữa tươi với đá"], a: 1, exp: "Trang 13: Cho sữa tươi và nước đường vào ca định lượng khuấy đều cho vào ly PP → cho trà → cho đá." },
+        { q: "Lượng sữa tươi cho dòng Trà Latte ly M và ly L lần lượt là?", opts: ["100ml và 150ml", "120ml và 150ml", "120ml và 160ml", "150ml và 200ml"], a: 1, exp: "Trang 13: Ly M dùng 120ml sữa tươi, Ly L dùng 150ml sữa tươi." },
+        { q: "Lượng cốt trà cho dòng Trà Latte ly M và ly L lần lượt là?", opts: ["200ml và 300ml", "250ml và 350ml", "300ml và 400ml", "250ml và 300ml"], a: 1, exp: "Trang 13: Ly M cho 250ml trà, Ly L cho 350ml trà." },
+        { q: "Hồng Trà Latte ly M mức 100% đường cần thêm bao nhiêu nước đường vào sữa?", opts: ["0cc", "5cc", "10cc", "15cc"], a: 1, exp: "Trang 13: Ly M 100% đường thêm 5cc nước đường + 250ml trà có đường." },
+        { q: "Hồng Trà Latte ly L mức 100% đường cần thêm bao nhiêu nước đường vào sữa?", opts: ["5cc", "10cc", "15cc", "20cc"], a: 1, exp: "Trang 13: Ly L 100% đường thêm 10cc nước đường + 350ml trà có đường." },
+        { q: "Hồng Trà Latte ly M mức 70% đường thì lượng nước đường thêm vào ca sữa là?", opts: ["0cc (không thêm đường, chỉ dùng trà có đường)", "5cc", "10cc", "3cc"], a: 0, exp: "Trang 13: Mức 70% đường không thêm nước đường (-), chỉ dùng 250ml trà có đường." },
+        { q: "Hồng Trà Latte ly M mức 50% đường gồm tỉ lệ trà như thế nào?", opts: ["150ml ngọt / 100ml lạt", "200ml ngọt / 50ml lạt", "125ml ngọt / 125ml lạt", "250ml ngọt / 0ml lạt"], a: 1, exp: "Trang 13: Mức 50% ly M gồm 200ml trà có đường / 50ml trà không đường." },
+        { q: "Hai món nào trong dòng Latte giảm đường tối đa được 70%?", opts: ["Hồng Trà Latte và Ô Long Latte", "Bí Đao Latte và Vải Thiều Latte", "Trà Xanh Latte và Bí Đao Latte", "TCĐĐ Latte và Hồng Trà Latte"], a: 1, exp: "Trang 13: Ghi chú: Hồng trà latte vải thiều, Bí đao latte giảm tối đa 70% đường." },
+        { q: "Món Trân Châu Đường Đen Latte có thao tác tráng ly bằng topping gì?", opts: ["1 vá TCĐĐ (60g)", "2 vá TCĐĐ (120g)", "2 vá trân châu hoàng kim", "1 vá thạch sương sáo"], a: 1, exp: "Trang 14: 2 vá TCĐĐ (120g) tráng ly." },
+        { q: "Ký hiệu thao tác chuẩn của dòng Trà Latte là gì?", opts: ["▲ Không lắc ly", "◎ Lắc trước khi ra món", "Stir Thức uống pha chế cần khuấy", "Xay sinh tố"], a: 2, exp: "Trang 5 & 13: Ký hiệu Stir - Thức uống pha chế cần khuấy." }
+      ],
+      // ĐỀ 6: DÒNG TRÀ CHANH & MÀU HỒNG LÃNG MẠN
+      [
+        { q: "Lượng nước cốt chanh cho Trà Chanh ly M và Ly L lần lượt là?", opts: ["15cc và 20cc", "20cc và 25cc", "20cc và 30cc", "25cc và 30cc"], a: 1, exp: "Trang 9: Cốt chanh ly M là 20cc, ly L là 25cc." },
+        { q: "Lượng nước đường cho Trà Chanh ly M và Ly L lần lượt là?", opts: ["10cc và 15cc", "15cc và 20cc", "10cc và 20cc", "5cc và 10cc"], a: 0, exp: "Trang 9: Nước đường ly M là 10cc, ly L là 15cc." },
+        { q: "Mỗi ly Trà Chanh (cả ly M và ly L) cho bao nhiêu lát chanh tươi?", opts: ["1 lát", "2 lát", "3 lát", "4 lát"], a: 1, exp: "Trang 9: Quy trình cho 2 lát chanh vào ly PP." },
+        { q: "Thao tác ra món chuẩn của Trà Chanh là gì?", opts: ["▲ Không cần lắc", "◎ Lắc trước khi ra món", "Dùng muỗng khuấy nhẹ", "Đậy nắp đưa khách"], a: 1, exp: "Trang 9: Lắc trước khi ra món." },
+        { q: "Món Màu Hồng Lãng Mạn (Trà Chanh Ổi Hồng) áp dụng cho kích cỡ nào?", opts: ["Chỉ có ly M (700cc)", "Chỉ có ly L (1000cc)", "Cả ly M và Ly L", "Chỉ có ly S"], a: 0, exp: "Trang 15: MÀU HỒNG LÃNG MẠN (TRÀ CHANH ỔI HỒNG) (Chỉ có ly M)." },
+        { q: "Định lượng cốt ổi hồng và cốt chanh trong món Màu Hồng Lãng Mạn là?", opts: ["50cc cốt ổi + 20cc cốt chanh", "70cc nước cốt ổi hồng + 10cc nước cốt chanh", "60cc cốt ổi + 15cc cốt chanh", "80cc cốt ổi + 10cc cốt chanh"], a: 1, exp: "Trang 15: 70cc nước cốt ổi hồng và 10cc nước cốt chanh." },
+        { q: "Nước sử dụng để châm đầy ly trong món Màu Hồng Lãng Mạn là gì?", opts: ["Hồng Trà Đài Loan", "Trà Xanh Hoa Nhài", "Nước Lọc", "Trà Ô Long"], a: 2, exp: "Trang 15: Bước 3: Cho nước lọc vào đầy ly PP. (Không dùng cốt trà)." },
+        { q: "Nước đường cho món Màu Hồng Lãng Mạn ở mức 100% đường là bao nhiêu?", opts: ["45ml", "50ml", "60ml (hoặc 60cc)", "70ml"], a: 2, exp: "Trang 15: Mức 100% đường là 60ml nước đường." },
+        { q: "Nước đường cho món Màu Hồng Lãng Mạn ở mức 70% đường là bao nhiêu?", opts: ["30ml", "40ml", "45ml", "50ml"], a: 2, exp: "Trang 15: Mức 70% đường là 45ml nước đường." },
+        { q: "Khi khách gọi Màu Hồng Lãng Mạn 'Không đá', lượng nước lọc đong bằng ca là?", opts: ["200ml", "250ml", "300ml", "350ml"], a: 1, exp: "Trang 15: Không đá: sử dụng ca trà đong 250ml nước lọc sau đó cho vào ly PP." }
+      ],
+      // ĐỀ 7: DÒNG TRÁI CÂY & TRÀ MIX BÍ ĐAO
+      [
+        { q: "Topping và nguyên liệu đào cho món Trà Đào (ly M) gồm những gì?", opts: ["3 miếng đào + 10cc nước đào", "5 miếng đào (25g) + 20cc nước đào + 1 vá thạch đào (45g)", "4 miếng đào + 20cc nước đào + 2 vá thạch đào", "5 miếng đào + 30cc nước đào"], a: 1, exp: "Trang 16: 5 miếng đào (25g) → 20cc nước đào → 1 vá thạch đào (45g)." },
+        { q: "Tổng lượng cốt trà cho món Trà Đào ly M (ít đá / không đá) là bao nhiêu?", opts: ["250ml", "300ml", "350ml", "400ml"], a: 1, exp: "Trang 16: Tổng lượng trà là 300ml." },
+        { q: "Bước đầu tiên khi pha Ô Long Nho (Chỉ có ly M) là gì?", opts: ["Cho đá vào ly", "Rót trà ô long vào ly", "Cho 50g mứt nho vào ly và dùng chày dầm ở mức vừa phải", "Cho sốt nho vào lắc"], a: 2, exp: "Trang 17: Cho (50g) mứt nho vào ly PP → dùng chày dầm mứt nho ở mức vừa phải." },
+        { q: "Lượng sốt nho cho vào món Ô Long Nho là bao nhiêu?", opts: ["20cc", "25cc", "30cc", "40cc"], a: 2, exp: "Trang 17: Cho tiếp (30cc) sốt nho → đá → cho trà vào ly PP." },
+        { q: "Tỉ lệ phối trà của Hồng Trà Bí Đao (Mix) là bao nhiêu?", opts: ["Tỉ lệ 5:5", "Tỉ lệ 6:4 (6 Bí Đao : 4 Hồng Trà)", "Tỉ lệ 7:3", "Tỉ lệ 8:2"], a: 1, exp: "Trang 20: HỒNG TRÀ BÍ ĐAO (Mix) Tỉ lệ 6:4." },
+        { q: "Lượng Trà Bí Đao và Hồng Trà cho ly M Hồng Trà Bí Đao 100% đường là?", opts: ["175ml Bí Đao / 175ml Hồng Trà", "210ml Trà Bí Đao / 140ml Hồng Trà có đường", "200ml Bí Đao / 150ml Hồng Trà", "150ml Bí Đao / 200ml Hồng Trà"], a: 1, exp: "Trang 20: Ly 700cc 100% đường: 210ml Trà Bí Đao / 140ml Trà có đường." },
+        { q: "Lượng Trà Bí Đao và Hồng Trà cho ly L Hồng Trà Bí Đao 100% đường là?", opts: ["250ml Bí Đao / 250ml Hồng Trà", "300ml Trà Bí Đao / 200ml Hồng Trà có đường", "350ml Bí Đao / 150ml Hồng Trà", "400ml Bí Đao / 100ml Hồng Trà"], a: 1, exp: "Trang 20: Ly 1000cc 100% đường: 300ml Trà Bí Đao / 200ml Trà có đường." },
+        { q: "Tỉ lệ phối trà của Trà Xanh Bí Đao (Mix) là bao nhiêu?", opts: ["Tỉ lệ 6:4", "Tỉ lệ 5:5", "Tỉ lệ 7:3", "Tỉ lệ 4:6"], a: 1, exp: "Trang 20: TRÀ XANH BÍ ĐAO (Mix) Tỉ lệ 5:5." },
+        { q: "Lượng Trà Bí Đao và Trà Xanh cho ly M Trà Xanh Bí Đao 100% đường là?", opts: ["150ml / 150ml", "175ml Trà Bí Đao / 175ml Trà Xanh có đường", "200ml / 100ml", "210ml / 140ml"], a: 1, exp: "Trang 20: Ly 700cc 100% đường: 175ml Trà Bí Đao / 175ml Trà Xanh có đường." },
+        { q: "Dòng Trà Mix Bí Đao (Hồng trà / Trà xanh) giảm đường tối đa được bao nhiêu?", opts: ["Giảm tối đa 70%", "Giảm tối đa 50%", "Giảm tối đa 30%", "Giảm về 0%"], a: 1, exp: "Trang 20: Chỉ có các mức đường 100%, 70%, 50% (giảm tối đa 50%)." }
+      ],
+      // ĐỀ 8: BÁT BẢO NGÔ GIA (CÔNG THỨC MỚI) & TRÀ Ô LONG BÍ ĐAO
+      [
+        { q: "Theo thông báo thay đổi công thức mới ngày 17/12/2025, món Bát Bảo Ngô Gia thay thế 2 loại topping nào?", opts: ["Bỏ Thạch Dừa và Sương Sáo", "Bỏ Thạch Q và Hạt thủy tinh củ năng, thay bằng Bánh Vuông Đường Đen (25g) và Trân Châu Củ Năng (25g)", "Bỏ Hạt sen và 3Q trắng", "Bỏ Trân châu đường đen và Thạch Q"], a: 1, exp: "Thông báo 004-1225/TB-HTNG: Thay Thạch Q và Hạt thủy tinh củ năng bằng Bánh Vuông Đường Đen (25g) và Trân Châu Củ Năng (25g)." },
+        { q: "Định lượng Bánh Vuông Đường Đen trong công thức mới của Bát Bảo Ngô Gia là bao nhiêu?", opts: ["1 vá (40g)", "Nửa vá — 25g", "Nửa vá — 20g", "1 vá nhỏ (60g)"], a: 1, exp: "Thông báo mới: Bánh Vuông Đường Đen: Nửa vá / 半勺 — 25gram." },
+        { q: "Định lượng Trân Châu Củ Năng trong công thức mới của Bát Bảo Ngô Gia là bao nhiêu?", opts: ["Nửa vá — 20g", "Nửa vá — 25g", "1 vá — 40g", "1 vá nhỏ — 50g"], a: 1, exp: "Thông báo mới: Trân Châu Củ Năng: Nửa vá / 半勺 — 25gram." },
+        { q: "Định lượng Trân Châu Đường Đen trong ly Bát Bảo Ngô Gia là bao nhiêu?", opts: ["1 vá (60g)", "1 vá nhỏ (Nửa vá) — 60g", "2 vá (120g)", "Nửa vá — 30g"], a: 1, exp: "Công thức chuẩn: 1 vá nhỏ Trân Châu Đường Đen = 60gram." },
+        { q: "Định lượng Thạch Sương Sáo và Thạch Dừa Nguyên Vị trong Bát Bảo Ngô Gia là?", opts: ["Mỗi loại nửa vá (20g)", "Mỗi loại 1 vá — 40g", "Mỗi loại 2 vá (80g)", "Mỗi loại 1 vá (50g)"], a: 1, exp: "1 vá Thạch Dừa (40g) và 1 vá Sương Sáo (40g)." },
+        { q: "Định lượng Hạt Sen và Trân Châu 3Q Trắng trong Bát Bảo lần lượt là?", opts: ["Hạt sen nửa vá (25g), 3Q trắng nửa vá (20g)", "Hạt sen 1 vá (50g), 3Q trắng 1 vá (40g)", "Hạt sen nửa vá (20g), 3Q trắng nửa vá (20g)", "Đều là 25g"], a: 0, exp: "Hạt sen nửa vá (25g), 3Q trắng nửa vá (20g)." },
+        { q: "Khách gọi Bát Bảo Ngô Gia 100% đường dùng loại trà nào và lượng bao nhiêu?", opts: ["200ml Hồng Trà", "200ml Trà Xanh", "200ml Trà Bí Đao", "250ml Trà Bí Đao"], a: 2, exp: "Trang 19: Khách order 100% đường sẽ dùng 200ml Trà Bí Đao." },
+        { q: "Khi khách giảm đường món Bát Bảo Ngô Gia (70%, 50%), ta dùng trà gì phối cùng?", opts: ["Trà Ô Long", "Trà Xanh Hoa Nhài hoặc Hồng Trà Đài Loan", "Nước lọc", "Sữa tươi"], a: 1, exp: "Trang 19: Giảm đường sẽ dùng Trà Xanh Hoa Nhài hoặc Hồng Trà Đài Loan (70%: 150ml Bí Đao / 50ml trà; 50%: 100ml Bí Đao / 100ml trà)." },
+        { q: "Món Trà Ô Long Bí Đao cho loại topping nào vào ly?", opts: ["Trân châu trắng", "1 vá Hạt Thủy Tinh Củ Năng (40g)", "Thạch Aiyu", "Thạch đào"], a: 1, exp: "Trang 18: Cho (40g) Củ Năng vào ly PP (1 vá Thủy Tinh Củ Năng)." },
+        { q: "Thao tác ra món của Bát Bảo Ngô Gia và Trà Ô Long Bí Đao là gì?", opts: ["◎ Lắc kỹ trước khi ra món", "▲ Ra món không cần lắc", "Khuấy tròn 5 vòng", "Cho đá vào rồi lắc"], a: 1, exp: "Cả 2 món đều mang ký hiệu ▲ Ra món không cần lắc." }
+      ],
+      // ĐỀ 9: KHOAI MÔN NGHIỀN & TRÀ KEM CHEESE
+      [
+        { q: "Định lượng Khoai Môn Nghiền cho món Trà Sữa Khoai Môn Nghiền ly M là?", opts: ["1 viên (80g)", "1,5 viên (khoảng 120g)", "2 viên (160g)", "1 vá (80g)"], a: 1, exp: "Trang 23: Cho vào ly PP 1,5 viên Khoai Môn Nghiền khoảng (120g)." },
+        { q: "Lượng kem béo cho Trà Sữa Khoai Môn Nghiền ly M là bao nhiêu?", opts: ["30cc", "40cc", "50cc", "60cc"], a: 1, exp: "Trang 23: Kem béo (40cc)." },
+        { q: "Nếu khách thêm Trân Châu Đường Đen vào Trà Sữa Khoai Môn, kem béo giảm còn?", opts: ["20cc", "30cc", "35cc", "Không giảm"], a: 1, exp: "Trang 23: LƯU Ý: Nếu có trân châu đường đen kem béo giảm 10cc (từ 40cc còn 30cc)." },
+        { q: "Trà Sữa Khoai Môn Nghiền có mấy mức đường theo SOP bảng tóm tắt & chi tiết?", opts: ["3 mức (100, 50, 0)", "Đủ 5 mức (100%, 70%, 50%, 30%, 0%)", "2 mức (100, 50)", "Cố định 100%"], a: 1, exp: "Trang 4 & Trang 23: Đủ 5 mức đường (100%: 300ml ngọt; 70%: 200/100; 50%: 150/150; 30%: 100/200; 0%: 300ml lạt)." },
+        { q: "Mức đá nào sau đây BỊ CẤM đối với món Trà Sữa Khoai Môn Nghiền?", opts: ["Không đá", "Ít đá", "Không để được nhiều đá (Cấm nhiều đá)", "Đá bình thường"], a: 2, exp: "Trang 23: Lượng đá ghi rõ: Không để được nhiều đá." },
+        { q: "Món Sữa Tươi Khoai Môn Nghiền ly M gồm những nguyên liệu gì?", opts: ["1,5 viên khoai môn (120g) + 300ml sữa tươi + nước đường", "1 viên khoai môn + 250ml sữa tươi + kem béo", "2 viên khoai môn + 300ml sữa tươi + cốt trà", "1,5 viên khoai môn + 200ml sữa tươi + đá"], a: 0, exp: "Trang 24: 1,5 viên khoai môn nghiền (120g) + 300ml sữa tươi + nước đường (100%: 20cc, 50%: 10cc, 0%: 0cc)." },
+        { q: "Lượng cốt trà chuẩn cho dòng Trà Kem Cheese (Hồng / Xanh / Ô Long) là?", opts: ["250ml", "300ml", "350ml", "400ml"], a: 2, exp: "Trang 27: Cho 350ml trà vào ly PP." },
+        { q: "Lượng Kem Cheese rót lên trên bề mặt ly có trọng lượng khoảng bao nhiêu?", opts: ["40g", "50g", "khoảng 60g", "80g"], a: 2, exp: "Trang 27: Cho kem cheese đến gần đầy ly (khoảng 60gram)." },
+        { q: "Quy tắc đá của dòng Trà Kem Cheese theo SOP ghi như thế nào?", opts: ["Làm được tất cả các mức đá", "Không thể không cho đá & Không thể cho nhiều đá", "Chỉ làm được không đá", "Bắt buộc phải nhiều đá"], a: 1, exp: "Trang 27: Không đá: THỨC UỐNG KHÔNG THỂ KHÔNG CHO ĐÁ. Nhiều đá: THỨC UỐNG KHÔNG THỂ CHO NHIỀU ĐÁ." },
+        { q: "Thao tác ra món của dòng Kem Cheese là gì?", opts: ["Lắc đều 5 lần", "Khuấy tan kem cheese vào trà", "Đậy nắp uống trực tiếp, không lắc ly", "Đánh bông kem cheese trong ly"], a: 2, exp: "Trang 27: Cho kem cheese gần đầy ly → đậy nắp hoàn thành, không lắc ly." }
+      ],
+      // ĐỀ 10: CÀ PHÊ MỚI & TRÀ XÍ MUỘI
+      [
+        { q: "Định lượng cà phê, sữa đặc, kem béo, nước đường của món Cà Phê Sữa (Ly M) là?", opts: ["250ml cà phê, 30cc sữa đặc, 30cc kem béo, 10cc đường", "300ml cà phê, 40cc sữa đặc, 40cc kem béo, 20cc nước đường", "300ml cà phê, 50cc sữa đặc, 30cc kem béo, 20cc đường", "200ml cà phê, 40cc sữa đặc, 40cc kem béo, 15cc đường"], a: 1, exp: "SOP Cà Phê Sữa: 300ml cà phê không đường + 40cc sữa đặc + 40cc kem béo + 20cc nước đường. Khuấy đều." },
+        { q: "Món Cà Phê Sữa có được làm mức 'Nhiều đá' không?", opts: ["Được làm bình thường", "CẤM: Thức uống không thể cho nhiều đá", "Chỉ làm khi khách yêu cầu", "Cho thêm 1 muỗng đá"], a: 1, exp: "SOP Cà Phê: Ghi rõ 'Thức uống không thể cho nhiều đá'." },
+        { q: "Quy trình pha Cà Phê Kem Sữa Tươi (Ly M) chuẩn là gì?", opts: ["Cho cà phê vào ly trước rồi cho sữa tươi", "120ml sữa tươi + 30cc nước đường vào ca khuấy đều rót vào ly PP → cho đá → cho cà phê 200ml → múc 1 viên kem vani (60g) → đậy nắp", "Xay kem vani với cà phê và sữa", "Khuấy cà phê với sữa tươi rồi cho đá đầy ly"], a: 1, exp: "SOP Cà Phê Kem Sữa Tươi: 120ml sữa tươi và 30cc nước đường vào ca định lượng khuấy đều rót vào ly PP → đá → 200ml cà phê → 1 viên kem vani (60g) → đậy nắp." },
+        { q: "Lượng cà phê không đường trong món Cà Phê Kem Sữa Tươi là bao nhiêu?", opts: ["150ml", "200ml", "250ml", "300ml"], a: 1, exp: "SOP Cà Phê Kem Sữa Tươi: Lượng cà phê không đường là 200ml." },
+        { q: "Cả 2 món Cà Phê Sữa và Cà Phê Kem Sữa Tươi có size L không và độ đường thế nào?", opts: ["Có size L, giảm được đường", "Chỉ có size M, độ ngọt cố định (100%)", "Chỉ có size L", "Size M, giảm tối đa 50%"], a: 1, exp: "Cả 2 món cà phê đều ghi rõ: (Chỉ có size M) (Độ ngọt cố định)." },
+        { q: "Hai loại topping mặc định trong tất cả các món Trà Xí Muội là gì?", opts: ["1 vá trân châu + 1 vá thạch dừa", "2 vá hạt é (60g) + 1 vá thạch Aiyu (40g)", "1 vá hạt é + 2 vá thạch aiyu", "2 vá hạt é + 1 vá hạt nổ củ năng"], a: 1, exp: "Trang 28, 29, 30: 2 vá hạt é (60g) + 1 vá thạch Aiyu (40g)." },
+        { q: "Món Trà Xí Muội Ngô Gia có giảm đường được không?", opts: ["Có, giảm đủ 5 mức", "Giảm được tối đa 50%", "Không, thức uống này cố định độ ngọt (100%)", "Giảm được tối đa 70%"], a: 2, exp: "Trang 28: Ghi chú: Thức uống này cố định độ ngọt." },
+        { q: "Lượng cốt Trà Xí Muội Ngô Gia cho ly M và ly L lần lượt là?", opts: ["250ml và 350ml", "300ml và 400ml", "350ml và 450ml", "300ml và 500ml"], a: 1, exp: "Trang 28: Ly M đong 300ml trà, Ly L đong 400ml trà xí muội." },
+        { q: "Mức đá nào BỊ CẤM đối với Trà Xí Muội Bí Đao Mix và Trà Xí Muội Ô Long Mix?", opts: ["Không đá", "Ít đá", "Nhiều đá (Thức uống không thể cho nhiều đá)", "Đá bình thường"], a: 2, exp: "Trang 29, 30: Đá nhiều: Thức uống không thể cho nhiều đá." },
+        { q: "Thành phẩm món Cà Phê Sữa và Cà Phê Kem Sữa Tươi ra món thao tác thế nào?", opts: ["Lắc mạnh 10 lần", "▲ Thành phẩm không cần lắc (ra món không cần lắc)", "Khuấy đều trước khi đưa khách", "Cho khách tự lắc"], a: 1, exp: "SOP Cà Phê: Thành phẩm không cần lắc." }
+      ]
+    ];
+
+    // ==========================================
+    // KHO 10 BÀI ĐỤC LỖ ĐÃ CẬP NHẬT CÔNG THỨC MỚI
+    // ==========================================
+    const CLOZE_BANK = [
+      {
+        title: "Bài 1: Định lượng Topping Trọng Điểm (Trang 6)",
+        txt: "Đào Miếng gồm [5] miếng ([25]g). Thạch sương sáo múc [2] vá ([80]g). Trân châu đường đen chuẩn gồm [2] vá ([120]g). Kem vani gồm [1] viên ([60]g). Hạt sen gồm [1] vá ([50]g).",
+        ans: ["5", "25", "2", "80", "2", "120", "1", "60", "1", "50"]
+      },
+      {
+        title: "Bài 2: Vạch Canh Ly PP Trà Đơn Ly M Khi Giảm Đường (Trang 7)",
+        txt: "Ly M (700cc) đá bình thường: Mức 100% đường rót trà ngọt [đầy] ly. Mức 70% đường rót trà ngọt đến vạch [500]ml. Mức 50% đường rót trà ngọt đến vạch [350]ml. Mức 30% đường rót trà ngọt đến vạch [200]ml. Mức 0% đường rót trà lạt [đầy] ly.",
+        ans: ["đầy", "500", "350", "200", "đầy"]
+      },
+      {
+        title: "Bài 3: Quy trình Hồng Trà Kem Tươi Ly M (Trang 8)",
+        txt: "Cho đá tới vạch [600]ml → cho trà gần đầy ly → múc [1] viên Kem Tươi ([60]g) cho vào ly PP → đậy nắp hoàn thành. Thao tác ra món: [Không] lắc.",
+        ans: ["600", "1", "60", "Không"]
+      },
+      {
+        title: "Bài 4: Quy trình Trà Chanh Ly M & Ly L (Trang 9)",
+        txt: "Ly M: Cho đá vào ly → Nước chanh ([20]cc) → Nước đường ([10]cc) → [2] lát chanh → Cho trà vào ly PP. Ly L: Cốt chanh ([25]cc) → Nước đường ([15]cc) → [2] lát chanh. Thao tác: [Lắc] trước khi ra món.",
+        ans: ["20", "10", "2", "25", "15", "2", "Lắc"]
+      },
+      {
+        title: "Bài 5: Sữa Tươi Trân Châu Đường Đen (Trang 12)",
+        txt: "[2] vá TCĐĐ ([120]g) tráng ly. Ly M bình thường cho đá đến vạch [600]ml và [300]ml sữa tươi. Nếu khách uống NHIỀU ĐÁ thì lượng sữa tươi giảm còn [200]ml. Thao tác: [Không] lắc.",
+        ans: ["2", "120", "600", "300", "200", "Không"]
+      },
+      {
+        title: "Bài 6: Màu Hồng Lãng Mạn / Ổi Hồng (Trang 15)",
+        txt: "Lấy ly đong [70]cc nước cốt ổi hồng và [10]cc nước cốt chanh → Cho [1] lát chanh tươi → Cho đá vào ly PP → Cho [nước lọc] vào đầy ly PP. Mức 100% đường dùng [60]ml nước đường. Thao tác: [Lắc] trước khi ra món.",
+        ans: ["70", "10", "1", "nước lọc", "60", "Lắc"]
+      },
+      {
+        title: "Bài 7: Quy trình Cà Phê Sữa & Cà Phê Kem Sữa Tươi (Công Thức Mới)",
+        txt: "Cà Phê Sữa: [300]ml cà phê + [40]cc sữa đặc + [40]cc kem béo + [20]cc nước đường → khuấy đều. Cà Phê Kem Sữa Tươi: [120]ml sữa tươi + [30]cc nước đường → đá → [200]ml cà phê → 1 viên kem vani ([60]g). Cả hai món đều [không thể] cho nhiều đá và thành phẩm [không cần] lắc.",
+        ans: ["300", "40", "40", "20", "120", "30", "200", "60", "không thể", "không cần"]
+      },
+      {
+        title: "Bài 8: Trà Sữa Socola & Quy Tắc TCĐĐ (Trang 22)",
+        txt: "Ly M: Cho [300]ml hồng trà vào ca → [40]cc kem béo + [30]cc sốt socola → khuấy đều trong ca. Ly L: [400]ml hồng trà + [60]cc kem béo + [50]cc sốt socola. Lưu ý: Nếu có trân châu đường đen, lượng kem béo [giảm 10cc].",
+        ans: ["300", "40", "30", "400", "60", "50", "giảm 10cc"]
+      },
+      {
+        title: "Bài 9: Trà Sữa Khoai Môn Nghiền Ly M (Trang 23)",
+        txt: "Cho vào ly PP [1.5] viên khoai môn ([120]g) → kem béo ([40]cc) → cho [300]ml trà. Mức đá: CẤM không để được [nhiều đá]. Thao tác: [Lắc] trước khi ra món.",
+        ans: ["1.5", "120", "40", "300", "nhiều đá", "Lắc"]
+      },
+      {
+        title: "Bài 10: 7 Loại Topping Bát Bảo Ngô Gia (Công thức mới 17/12/2025)",
+        txt: "Topping Bát Bảo mới: 1 vá nhỏ Trân Châu Đường Đen ([60]g) + Nửa vá Bánh Vuông Đường Đen ([25]g) + Nửa vá Trân Châu Củ Năng ([25]g) + 1 vá Sương Sáo ([40]g) + 1 vá Thạch Dừa ([40]g) + Nửa vá Hạt Sen ([25]g) + Nửa vá 3Q Trắng ([20]g). 100% đường dùng [200]ml Trà Bí Đao. Thao tác: [Không] lắc.",
+        ans: ["60", "25", "25", "40", "40", "25", "20", "200", "Không"]
+      }
+    ];
+
+    // ==========================================
+    // LOGIC TRẮC NGHIỆM THEO BỘ ĐỀ
+    // ==========================================
+    let curQuizExamIdx = 0;
+    let curQuizList = [];
+    let curQuizUserAns = {};
+
+    function changeQuizExam(val) {
+      loadQuizExam(parseInt(val));
+    }
+
+    function loadQuizExam(examIdx) {
+      curQuizExamIdx = examIdx;
+      curQuizList = QUIZ_BANK[examIdx];
+      curQuizUserAns = {};
+      
+      const wrap = document.getElementById('quiz-list');
+      wrap.innerHTML = '';
+      document.getElementById('btn-sub-quiz').style.display = 'flex';
+      document.getElementById('quiz-summary').innerHTML = `<i class="fa-solid fa-list-check"></i> Đang làm: Đề ${examIdx + 1} (Gồm đúng 10 câu hỏi chuẩn SOP)`;
+
+      curQuizList.forEach((q, qIdx) => {
+        let optsHtml = '';
+        q.opts.forEach((o, oIdx) => {
+          optsHtml += `<button type="button" class="q-opt" id="q-${qIdx}-${oIdx}" onclick="pickQuizOpt(${qIdx}, ${oIdx})">
+            <strong>${String.fromCharCode(65 + oIdx)}.</strong> ${o}
+          </button>`;
+        });
+
+        wrap.innerHTML += `
+          <div class="quiz-card">
+            <div class="q-title">Câu ${qIdx + 1}/10: ${q.q}</div>
+            <div>${optsHtml}</div>
+            <div id="q-exp-${qIdx}" style="display:none; margin-top:8px; font-size:0.82rem; padding:8px 10px; border-radius:6px; background:#eff6ff; line-height:1.45;"></div>
+          </div>
+        `;
+      });
+    }
+
+    function pickQuizOpt(qIdx, oIdx) {
+      curQuizUserAns[qIdx] = oIdx;
+      for (let i = 0; i < 4; i++) {
+        const el = document.getElementById(`q-${qIdx}-${i}`);
+        if (el) el.classList.remove('selected');
+      }
+      document.getElementById(`q-${qIdx}-${oIdx}`).classList.add('selected');
+    }
+
+    function gradeQuiz() {
+      let score = 0;
+      let unanswered = 0;
+
+      for (let i = 0; i < curQuizList.length; i++) {
+        if (curQuizUserAns[i] === undefined) unanswered++;
+      }
+
+      if (unanswered > 0) {
+        if (!confirm(`Bạn còn ${unanswered} câu chưa chọn đáp án! Bạn có chắc chắn muốn nộp bài chấm điểm luôn không?`)) {
+          return;
+        }
+      }
+
+      curQuizList.forEach((q, idx) => {
+        const chosen = curQuizUserAns[idx];
+        for (let i = 0; i < q.opts.length; i++) {
+          const el = document.getElementById(`q-${idx}-${i}`);
+          el.onclick = null;
+          if (i === q.a) el.classList.add('correct');
+          else if (i === chosen) el.classList.add('wrong');
+        }
+
+        const expEl = document.getElementById(`q-exp-${idx}`);
+        expEl.style.display = 'block';
+        if (chosen === q.a) {
+          score++;
+          expEl.innerHTML = `<span style="color:var(--success); font-weight:800;"><i class="fa-solid fa-circle-check"></i> Đúng!</span> ${q.exp}`;
+        } else {
+          expEl.innerHTML = `<span style="color:var(--danger); font-weight:800;"><i class="fa-solid fa-circle-xmark"></i> Sai rồi!</span> Đáp án đúng là <strong>${String.fromCharCode(65 + q.a)}</strong>. ${q.exp}`;
+        }
+      });
+
+      document.getElementById('btn-sub-quiz').style.display = 'none';
+      alert(`KẾT QUẢ ĐỀ ${curQuizExamIdx + 1}: Bạn đạt ${score}/10 điểm!\n${score >= 9 ? 'Xuất sắc! Bạn nắm chắc SOP như một Pro Barista!' : score >= 7 ? 'Khá tốt! Ôn lại các câu sai để tránh bị vào tủ đông nhé!' : 'Cần ôn lại kỹ các trang SOP tương ứng!'}`);
+    }
+
+    function resetQuizCurrent() {
+      loadQuizExam(curQuizExamIdx);
+    }
+
+    // ==========================================
+    // LOGIC ĐỤC LỖ THEO BỘ BÀI
+    // ==========================================
+    let curClozeIdx = 0;
+
+    function changeClozeExam(val) {
+      loadClozeExam(parseInt(val));
+    }
+
+    function loadClozeExam(idx) {
+      curClozeIdx = idx;
+      const c = CLOZE_BANK[idx];
+      const wrap = document.getElementById('cloze-list');
+      wrap.innerHTML = '';
+
+      let bIdx = 0;
+      let rendered = c.txt.replace(/\[(.*?)\]/g, () => {
+        const id = `cloze-in-${idx}-${bIdx}`;
+        bIdx++;
+        return `<input type="text" class="blank-input" id="${id}" placeholder="...điền...">`;
+      });
+
+      wrap.innerHTML = `
+        <div class="quiz-card">
+          <div class="q-title"><i class="fa-solid fa-pen-nib" style="color:var(--primary);"></i> ${c.title}</div>
+          <div style="line-height:2.2; font-size:0.88rem; color:#1e293b;">${rendered}</div>
+          <div id="cloze-note-${idx}" style="display:none; margin-top:10px; font-size:0.83rem; padding:10px; border-radius:8px; background:#eff6ff; border:1px solid #bae6fd;"></div>
+        </div>
+      `;
+    }
+
+    function gradeCloze() {
+      const c = CLOZE_BANK[curClozeIdx];
+      let ok = 0;
+
+      c.ans.forEach((a, aIdx) => {
+        const inp = document.getElementById(`cloze-in-${curClozeIdx}-${aIdx}`);
+        const val = inp.value.trim().toLowerCase();
+        const target = a.toLowerCase();
+
+        const isMatch = (val === target) ||
+                        (target === 'lắc' && val.includes('lắc')) ||
+                        (target === 'không' && val.includes('không')) ||
+                        (target === 'không thể' && (val.includes('không') || val.includes('khong'))) ||
+                        (target === 'không cần' && (val.includes('không') || val.includes('khong'))) ||
+                        (target === 'nước lọc' && (val.includes('lọc') || val.includes('loc'))) ||
+                        (target === 'giảm 10cc' && (val.includes('10') || val.includes('giảm'))) ||
+                        (target === 'nhiều đá' && (val.includes('nhiều') || val.includes('nhieu')));
+
+        if (isMatch) {
+          ok++;
+          inp.style.backgroundColor = '#dcfce7';
+          inp.style.borderBottomColor = '#10b981';
+          inp.style.color = '#065f46';
+        } else {
+          inp.style.backgroundColor = '#fee2e2';
+          inp.style.borderBottomColor = '#ef4444';
+          inp.style.color = '#991b1b';
+        }
+      });
+
+      const note = document.getElementById(`cloze-note-${curClozeIdx}`);
+      note.style.display = 'block';
+      note.innerHTML = `<strong>Đáp án đúng:</strong> [ ${c.ans.join('  •  ')} ]`;
+      alert(`Kết quả bài đục lỗ: Bạn điền đúng ${ok}/${c.ans.length} vị trí!`);
+    }
+
+    function resetClozeCurrent() {
+      loadClozeExam(curClozeIdx);
+    }
+
+    window.onload = function() {
+      renderProcessAccordion();
+      onDrinkChange();
+    };
+  </script>
+</body>
+</html>
